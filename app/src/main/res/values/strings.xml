@@ -12,5 +12,6 @@
     <string name="welcomeMsgStr">Welcome to The app</string>
     <string name="usernameStr">Username</string>
     <string name="Input_hint">Enter your name</string>
-    <string name="welcomepageBTN">Enter</string>
+    <string name="welcomepageBTN">Save</string>
+    <string name="hint_name_edit">Enter your name</string>
 </resources>
