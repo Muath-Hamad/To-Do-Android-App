@@ -3,8 +3,10 @@ package com.training.calendar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -13,40 +15,58 @@ import android.widget.TextView;
 public class WelcomePage extends AppCompatActivity {
 
     EditText name ;
-    Button save , test1;
+    Button save ;
     TextView username;
     SharedPreferences sp ;
     String usrInput;
+    String savedname;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome_page);
+        getSupportActionBar().hide();
         name = findViewById(R.id.name_edit);
         save = findViewById(R.id.saveBTN);
         username = findViewById(R.id.UsernameWelcome);
-        test1 = findViewById(R.id.tempBTN);
+
         sp = getSharedPreferences("UserSettings" , Context.MODE_PRIVATE);
-        save.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                usrInput = name.getText().toString();
-                SharedPreferences.Editor editor = sp.edit();
-                editor.putString("UserName",usrInput);
-                editor.commit();
-            }
-        });
-//        String nametest;
-//        sp = getApplicationContext().getSharedPreferences("UserSettings",Context.MODE_PRIVATE);
-//        nametest = sp.getString("UserName","");
-//        test1.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                username.setText(nametest);
-//            }
-//        });
+        SharedPreferences.Editor editor = sp.edit();
+
+        if (!sp.getBoolean("UserNameAvailable",false)){ // To see if the user has a name in shared pref
+                save.setVisibility(View.VISIBLE);
+                name.setVisibility(View.VISIBLE);
+                save.setClickable(true);
+                name.setClickable(true);
+
+            save.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    usrInput = name.getText().toString();
+
+                    editor.putString("UserName",usrInput);
+                    editor.putBoolean("UserNameAvailable",true);
+                    editor.apply();
+                }
+            });
+        }else{
+            savedname = sp.getString("UserName","");
+            username.setText(savedname);
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    Intent intent=new Intent(WelcomePage.this , Create_Event.class);
+                    startActivity(intent);
+                    finish();
+                }
+            } , 2000);
+
+        }
+
+
+        //editor.putBoolean("UserNameAvailable",false);
+
 
     }
-
 
 }
