@@ -17,4 +17,6 @@
     <string name="eventTitleText">Title</string>
     <string name="StartText">Starts</string>
     <string name="EndsTesxt">Ends</string>
+    <string name="to_do_list">To Do List</string>
+    <string name="button">Button</string>
 </resources>
