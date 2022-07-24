@@ -47,15 +47,19 @@ public class WelcomePage extends AppCompatActivity {
                     editor.putString("UserName",usrInput);
                     editor.putBoolean("UserNameAvailable",true);
                     editor.apply();
+                    username.setText(usrInput);
                 }
             });
+            Intent intent=new Intent(WelcomePage.this , MainActivity.class);
+            startActivity(intent);
+            finish();
         }else{
             savedname = sp.getString("UserName","");
             username.setText(savedname);
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    Intent intent=new Intent(WelcomePage.this , Create_Event.class);
+                    Intent intent=new Intent(WelcomePage.this , MainActivity.class);
                     startActivity(intent);
                     finish();
                 }
