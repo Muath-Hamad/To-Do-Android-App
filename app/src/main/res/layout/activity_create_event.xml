@@ -58,11 +58,12 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <TextView
+                <Button
                     android:id="@+id/StartDatePicker"
                     android:layout_width="wrap_content"
                     android:layout_height="0dp"
                     android:gravity="center_vertical"
+                    android:onClick="openDatePicker"
                     android:text="JAN 01 2022"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/StartTimePicker"
@@ -71,7 +72,7 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintVertical_bias="0.0" />
 
-                <TextView
+                <Button
                     android:id="@+id/StartTimePicker"
                     android:layout_width="wrap_content"
                     android:layout_height="0dp"
@@ -108,11 +109,12 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <TextView
+                <Button
                     android:id="@+id/EndDatePicker"
                     android:layout_width="wrap_content"
                     android:layout_height="0dp"
                     android:gravity="center_vertical"
+                    android:onClick="openDatePicker"
                     android:text="JAN 01 2022"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/EndTimePicker"
@@ -121,7 +123,7 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintVertical_bias="0.0" />
 
-                <TextView
+                <Button
                     android:id="@+id/EndTimePicker"
                     android:layout_width="wrap_content"
                     android:layout_height="0dp"

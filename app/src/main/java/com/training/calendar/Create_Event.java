@@ -6,6 +6,7 @@ import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.TextView;
 
@@ -14,7 +15,9 @@ import java.util.Calendar;
 public class Create_Event extends AppCompatActivity {
 
     private DatePickerDialog datePickerDialog;
-    private TextView StartDate , EndDate ,StartTime , EndTime;
+    private Button StartDate , EndDate ,StartTime , EndTime;
+    private String date;
+    private boolean Caller; // this is set by the clicked button
 
 
     @Override
@@ -24,7 +27,9 @@ public class Create_Event extends AppCompatActivity {
         
         initDatePicker();
         StartDate = findViewById(R.id.StartDatePicker);
+        EndDate = findViewById(R.id.EndDatePicker);
         StartDate.setText(getTodaysDate());
+        EndDate.setText(getTodaysDate());
     }
 
     private String getTodaysDate() {
@@ -37,12 +42,18 @@ public class Create_Event extends AppCompatActivity {
     }
 
     private void initDatePicker() {
+
         DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                 month += 1;
-               String date = makeDateString(day,month,year);
-               StartDate.setText(date);
+                date = makeDateString(day,month,year);
+                if (Caller){
+                    StartDate.setText(date);
+
+                }else {
+                    EndDate.setText(date);
+                }
             }
         };
 
@@ -78,7 +89,19 @@ public class Create_Event extends AppCompatActivity {
     }
 
     public  void  openDatePicker(View view){
-        datePickerDialog.show();
+
+        if (view.equals(StartDate)){
+            Caller = true;
+            datePickerDialog.show();
+
+
+        }
+        if (view.equals(EndDate)){
+            Caller = false;
+            datePickerDialog.show();
+
+        }
+
     }
 
 }

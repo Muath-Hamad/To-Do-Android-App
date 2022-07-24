@@ -38,7 +38,7 @@ public class WelcomePage extends AppCompatActivity {
                 name.setVisibility(View.VISIBLE);
                 save.setClickable(true);
                 name.setClickable(true);
-
+            Intent intent1 = new Intent(this ,Create_Event.class);
             save.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -47,21 +47,21 @@ public class WelcomePage extends AppCompatActivity {
                     editor.putString("UserName",usrInput);
                     editor.putBoolean("UserNameAvailable",true);
                     editor.apply();
-                    username.setText(usrInput);
+                   username.setText(usrInput);
+
+                    startActivity(intent1);
                 }
             });
-            Intent intent=new Intent(WelcomePage.this , MainActivity.class);
-            startActivity(intent);
-            finish();
+
         }else{
             savedname = sp.getString("UserName","");
             username.setText(savedname);
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    Intent intent=new Intent(WelcomePage.this , MainActivity.class);
+                    Intent intent=new Intent(WelcomePage.this , Create_Event.class);
                     startActivity(intent);
-                    finish();
+                    //finish();
                 }
             } , 2000);
 
