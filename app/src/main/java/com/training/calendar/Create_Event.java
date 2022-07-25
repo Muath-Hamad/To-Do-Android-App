@@ -126,4 +126,7 @@ public class Create_Event extends AppCompatActivity {
         timePickerDialog.show();
     }
 
+    public void SaveButton(View view) { // this method is empty at the moment the plan is to make it save data to DB and go back to main page
+
+    }
 }
