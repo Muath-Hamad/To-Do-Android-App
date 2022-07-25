@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.TimePicker;
 
 import java.util.Calendar;
@@ -21,6 +22,7 @@ public class Create_Event extends AppCompatActivity {
     private String date;
     private boolean Caller; // this is set by the clicked button
     private int hour , minute;
+    private EditText eventTitle;
 
 
     @Override
@@ -29,12 +31,23 @@ public class Create_Event extends AppCompatActivity {
         setContentView(R.layout.activity_create_event);
         StartTime = findViewById(R.id.StartTimePicker);
         EndTime = findViewById(R.id.EndTimePicker);
+        eventTitle = findViewById(R.id.TitleEdit);
 
         initDatePicker();
         StartDate = findViewById(R.id.CategoryColorPicker);
         EndDate = findViewById(R.id.EndDatePicker);
         StartDate.setText(getTodaysDate());
         EndDate.setText(getTodaysDate());
+
+        eventTitle.setOnClickListener(new View.OnClickListener() { // clear field on first use
+            @Override
+            public void onClick(View view) {
+                if (getString(R.string.eventTitleText).equals(eventTitle.getText().toString())){
+                    eventTitle.setText("");
+                }
+            }
+        });
+
     }
 
     private String getTodaysDate() {

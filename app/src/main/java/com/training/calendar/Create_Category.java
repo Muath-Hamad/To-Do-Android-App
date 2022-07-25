@@ -37,6 +37,14 @@ public class Create_Category extends AppCompatActivity {
             }
         });
 
+        categoryTitle.setOnClickListener(new View.OnClickListener() { // clear field on first use
+            @Override
+            public void onClick(View view) {
+                if (getString(R.string.eventTitleText).equals(categoryTitle.getText().toString())){
+                    categoryTitle.setText("");
+                }
+            }
+        });
     }
 
     private void openColorPicker() {
