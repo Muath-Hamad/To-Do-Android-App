@@ -35,21 +35,28 @@ public class WelcomePage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome_page);
-       // getSupportActionBar().hide();
+
         name = findViewById(R.id.name_edit);
         save = findViewById(R.id.saveBTN);
         username = findViewById(R.id.UsernameWelcome);
 
-//         sp = EncryptedSharedPreferences.create(
-//                "encryptedUserSettings",
-//                masterKeyAlias,
-//                Context,
-//                EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
-//                EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
-//        );
+        try {
+            sp = EncryptedSharedPreferences.create(
+                   "encryptedUserSettings",
+                   masterKeyAlias,
+                   this,
+                   EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
+                   EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
+           );
+        } catch (GeneralSecurityException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-        sp = getSharedPreferences("UserSettings" , Context.MODE_PRIVATE);
+
         SharedPreferences.Editor editor = sp.edit();
+
 
         if (!sp.getBoolean("UserNameAvailable",false)){ // To see if the user has a name in shared pref
                 save.setVisibility(View.VISIBLE);
@@ -68,6 +75,7 @@ public class WelcomePage extends AppCompatActivity {
                    username.setText(usrInput);
 
                     startActivity(intent1);
+                    finish();
                 }
             });
 
@@ -79,14 +87,13 @@ public class WelcomePage extends AppCompatActivity {
                 public void run() {
                     Intent intent=new Intent(WelcomePage.this , MainActivity.class);
                     startActivity(intent);
-                    //finish();
+                    finish();
                 }
             } , 2000);
 
         }
 
 
-        //editor.putBoolean("UserNameAvailable",false);
 
 
     }

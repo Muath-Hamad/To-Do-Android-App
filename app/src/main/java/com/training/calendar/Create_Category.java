@@ -16,9 +16,9 @@ import yuku.ambilwarna.AmbilWarnaDialog;
 public class Create_Category extends AppCompatActivity {
 
     Button ColorPicker;
-    TextView preview;
-    EditText categoryTitle;
-    int ChoosenColor;
+    TextView preview; // this will help show the user what color is currently chosen
+    EditText categoryTitle; // this will have the name of category
+    int ChoosenColor; // this at first will have default color until changed by user
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

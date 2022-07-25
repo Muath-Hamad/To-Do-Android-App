@@ -18,11 +18,11 @@ import java.util.Locale;
 public class Create_Event extends AppCompatActivity {
 
     private DatePickerDialog datePickerDialog;
-    private Button StartDate , EndDate ,StartTime , EndTime;
+    private Button StartDate , EndDate ,StartTime , EndTime; // these at first will have todays date until changed by user
     private String date;
     private boolean Caller; // this is set by the clicked button
     private int hour , minute;
-    private EditText eventTitle;
+    private EditText eventTitle; // this will have the name of the event entered by the user
 
 
     @Override
