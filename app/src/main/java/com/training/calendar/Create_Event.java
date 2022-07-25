@@ -4,13 +4,16 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.TextView;
+import android.widget.TimePicker;
 
 import java.util.Calendar;
+import java.util.Locale;
 
 public class Create_Event extends AppCompatActivity {
 
@@ -18,13 +21,16 @@ public class Create_Event extends AppCompatActivity {
     private Button StartDate , EndDate ,StartTime , EndTime;
     private String date;
     private boolean Caller; // this is set by the clicked button
+    private int hour , minute;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_event);
-        
+        StartTime = findViewById(R.id.StartTimePicker);
+        EndTime = findViewById(R.id.EndTimePicker);
+
         initDatePicker();
         StartDate = findViewById(R.id.StartDatePicker);
         EndDate = findViewById(R.id.EndDatePicker);
@@ -89,19 +95,35 @@ public class Create_Event extends AppCompatActivity {
     }
 
     public  void  openDatePicker(View view){
-
-        if (view.equals(StartDate)){
+        if (view.equals(StartDate)){ // this will excute if the user clicks starts date picker
             Caller = true;
             datePickerDialog.show();
-
-
         }
-        if (view.equals(EndDate)){
+        if (view.equals(EndDate)){// this will excute if the user clicks Ends date picker
             Caller = false;
             datePickerDialog.show();
-
         }
 
+    }
+
+    public void popTimePicker(View view){
+        TimePickerDialog.OnTimeSetListener onTimeSetListener = new TimePickerDialog.OnTimeSetListener() {
+            @Override
+            public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+                hour = selectedHour; minute = selectedMinute;
+                if (view.equals(StartTime)){
+                    StartTime.setText(String.format(Locale.getDefault(), "%02d:%02d",hour ,minute));
+                }
+                if (view.equals(EndTime)){
+                    EndTime.setText(String.format(Locale.getDefault(), "%02d:%02d",hour ,minute));
+                }
+            }
+        };
+        int style = AlertDialog.THEME_HOLO_LIGHT; // to change the style of the dialog plug in this style as 2nd parameter in the following method
+
+        TimePickerDialog timePickerDialog = new TimePickerDialog(this , onTimeSetListener , hour ,minute , true);
+        timePickerDialog.setTitle("Select Time");
+        timePickerDialog.show();
     }
 
 }
