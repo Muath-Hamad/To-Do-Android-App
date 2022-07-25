@@ -7,7 +7,7 @@
     tools:context=".Create_Event">
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/SaveBTN"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
@@ -71,7 +71,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <Button
-                    android:id="@+id/StartDatePicker"
+                    android:id="@+id/CategoryColorPicker"
                     android:layout_width="wrap_content"
                     android:layout_height="0dp"
                     android:gravity="center_vertical"
@@ -94,7 +94,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toEndOf="@+id/StartDatePicker"
+                    app:layout_constraintStart_toEndOf="@+id/CategoryColorPicker"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintVertical_bias="0.644" />
             </androidx.constraintlayout.widget.ConstraintLayout>

@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.TextView;
 import android.widget.TimePicker;
 
 import java.util.Calendar;
@@ -32,7 +31,7 @@ public class Create_Event extends AppCompatActivity {
         EndTime = findViewById(R.id.EndTimePicker);
 
         initDatePicker();
-        StartDate = findViewById(R.id.StartDatePicker);
+        StartDate = findViewById(R.id.CategoryColorPicker);
         EndDate = findViewById(R.id.EndDatePicker);
         StartDate.setText(getTodaysDate());
         EndDate.setText(getTodaysDate());
