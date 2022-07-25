@@ -56,7 +56,7 @@ public class WelcomePage extends AppCompatActivity {
                 name.setVisibility(View.VISIBLE);
                 save.setClickable(true);
                 name.setClickable(true);
-            Intent intent1 = new Intent(WelcomePage.this ,Create_Event.class);
+            Intent intent1 = new Intent(WelcomePage.this ,MainActivity.class);
             save.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -77,7 +77,7 @@ public class WelcomePage extends AppCompatActivity {
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    Intent intent=new Intent(WelcomePage.this , Create_Event.class);
+                    Intent intent=new Intent(WelcomePage.this , MainActivity.class);
                     startActivity(intent);
                     //finish();
                 }
