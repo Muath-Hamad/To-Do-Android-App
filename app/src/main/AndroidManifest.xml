@@ -14,10 +14,6 @@
         android:theme="@style/Theme.Calendar"
         tools:targetApi="31">
         <activity
-            android:name=".MainActivity"
-            android:exported="false" />
-
-        <activity
             android:name=".WelcomePage"
             android:exported="true"
             android:label="Home"><intent-filter>
@@ -26,8 +22,13 @@
             <category android:name="android.intent.category.LAUNCHER" />
         </intent-filter></activity>
 
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.Calendar.NoActionBar">
 
-
+        </activity>
 
         <activity
             android:name=".Create_Event"
@@ -36,6 +37,15 @@
             android:theme="@style/Theme.Calendar.NoActionBar">
 
         </activity>
+
+        <activity
+            android:name=".Task_View"
+            android:exported="true"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.Calendar.NoActionBar">
+
+        </activity>
+
     </application>
 
 </manifest>

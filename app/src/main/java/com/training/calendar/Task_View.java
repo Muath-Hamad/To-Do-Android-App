@@ -23,15 +23,9 @@ import android.widget.Button;
 import com.training.calendar.databinding.ActivityMainBinding;
 
 public class Task_View extends AppCompatActivity {
-//    protected void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//
-//
-//        setContentView(R.layout.activity_main);
-//    }
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-       // setContentView(R);
+       setContentView(R.layout.activity_task_view);
 
     }
 }

@@ -30,12 +30,12 @@ public class WelcomePage extends AppCompatActivity {
     public WelcomePage() throws GeneralSecurityException, IOException {
     }
 
-    ;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome_page);
-        getSupportActionBar().hide();
+       // getSupportActionBar().hide();
         name = findViewById(R.id.name_edit);
         save = findViewById(R.id.saveBTN);
         username = findViewById(R.id.UsernameWelcome);
@@ -56,7 +56,7 @@ public class WelcomePage extends AppCompatActivity {
                 name.setVisibility(View.VISIBLE);
                 save.setClickable(true);
                 name.setClickable(true);
-            Intent intent1 = new Intent(this ,Create_Event.class);
+            Intent intent1 = new Intent(WelcomePage.this ,Create_Event.class);
             save.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
