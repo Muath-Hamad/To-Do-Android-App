@@ -11,6 +11,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import androidx.security.crypto.EncryptedSharedPreferences;
+import androidx.security.crypto.MasterKeys;
+
+import java.io.IOException;
+import java.security.GeneralSecurityException;
 
 public class WelcomePage extends AppCompatActivity {
 
@@ -20,7 +25,12 @@ public class WelcomePage extends AppCompatActivity {
     SharedPreferences sp ;
     String usrInput;
     String savedname;
+    String masterKeyAlias = MasterKeys.getOrCreate(MasterKeys.AES256_GCM_SPEC);
 
+    public WelcomePage() throws GeneralSecurityException, IOException {
+    }
+
+    ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,6 +39,14 @@ public class WelcomePage extends AppCompatActivity {
         name = findViewById(R.id.name_edit);
         save = findViewById(R.id.saveBTN);
         username = findViewById(R.id.UsernameWelcome);
+
+//         sp = EncryptedSharedPreferences.create(
+//                "encryptedUserSettings",
+//                masterKeyAlias,
+//                Context,
+//                EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
+//                EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
+//        );
 
         sp = getSharedPreferences("UserSettings" , Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sp.edit();
