@@ -28,6 +28,7 @@
         android:text="Today"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        android:onClick="TaskView"
         app:layout_constraintTop_toBottomOf="@+id/toolbar"
         tools:ignore="TouchTargetSizeCheck" />
 
@@ -40,6 +41,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Today"
+        android:onClick="TaskView"
         tools:ignore="TouchTargetSizeCheck" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -52,6 +54,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@android:drawable/ic_input_add"
+        android:onClick="AddTask"
         tools:ignore="SpeakableTextPresentCheck" />
 
 
