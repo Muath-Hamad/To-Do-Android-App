@@ -1,7 +1,5 @@
 package com.training.calendar;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
@@ -12,21 +10,31 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TimePicker;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import java.util.Calendar;
 import java.util.Locale;
 
 public class Create_Event extends AppCompatActivity {
 
+
     private DatePickerDialog datePickerDialog;
-    private Button StartDate , EndDate ,StartTime , EndTime; // these at first will have todays date until changed by user
+    private Button StartDate , EndDate ,StartTime , EndTime; // these at first will have today's date until changed by user
     private String date;
     private boolean Caller; // this is set by the clicked button
     private int hour , minute;
     private EditText eventTitle; // this will have the name of the event entered by the user
 
+    public String getDate() {
+        return date;
+    }
+
+    public String getEventTitle() {
+        return String.valueOf(eventTitle.getText());
+    }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_event);
         StartTime = findViewById(R.id.StartTimePicker);
@@ -49,6 +57,7 @@ public class Create_Event extends AppCompatActivity {
         });
 
     }
+
 
     private String getTodaysDate() {
         Calendar cal = Calendar.getInstance();
@@ -139,6 +148,12 @@ public class Create_Event extends AppCompatActivity {
     }
 
     public void SaveButton(View view) { // this method is empty at the moment the plan is to make it save data to DB and go back to main page
+        AppDatabase db = AppDatabase.getDbInstance(this.getApplicationContext());
+        User user = new User();
+        user.taskName = eventTitle.getText().toString();
+        user.date = date;
+        db.userDao().insertAll(user);
+        finish();
 
     }
 }
