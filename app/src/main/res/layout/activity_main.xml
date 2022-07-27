@@ -57,5 +57,34 @@
         android:onClick="AddTask"
         tools:ignore="SpeakableTextPresentCheck" />
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/Create_EventBTN"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:clickable="true"
+        android:onClick="AddEvent"
+        android:src="@drawable/ic_event"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/Add"
+        app:layout_constraintEnd_toEndOf="parent"
+
+        tools:ignore="SpeakableTextPresentCheck" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/Create_CategoryBTN"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="80dp"
+        android:clickable="true"
+        android:onClick="AddCategory"
+        android:src="@drawable/ic_category"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/Add"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:ignore="SpeakableTextPresentCheck" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
