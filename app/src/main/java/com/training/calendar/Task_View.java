@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 public class Task_View extends AppCompatActivity {
+
     private ListView noteListView;
     private UserListAdapter userListAdapter;
     protected void onCreate(Bundle savedInstanceState){

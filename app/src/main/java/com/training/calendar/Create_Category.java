@@ -63,7 +63,19 @@ public class Create_Category extends AppCompatActivity {
     }
 
     public void SaveButton(View view) { // write data into DB and then return to main activity
+        String sText = categoryTitle.getText().toString().trim();
 
+        if (!sText.equals("")){
+
+            AppDatabase db = AppDatabase.getDbInstance(this.getApplicationContext());
+            CategoryData data = new CategoryData();
+            data.setTitle(sText);
+            data.setColor(ChoosenColor);
+            db.categoryDao().insert(data);
+
+
+
+        }
 
 
         Intent i2 = new Intent(Create_Category.this ,MainActivity.class);

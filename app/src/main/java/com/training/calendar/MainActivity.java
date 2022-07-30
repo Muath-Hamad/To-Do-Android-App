@@ -14,6 +14,8 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.training.calendar.databinding.ActivityMainBinding;
 
@@ -21,10 +23,22 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
 
-boolean isShown = false;
-FloatingActionButton addCateg , addEvent;
+    boolean isShown = false;
+    FloatingActionButton addCateg , addEvent;
+
+    RecyclerView recView;
+
+    List<CategoryData> dataList = new ArrayList<>();
+    AppDatabase AppDB;
+    categoryAdapter adapter;
+    LinearLayoutManager linearLayoutManager;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,6 +46,23 @@ FloatingActionButton addCateg , addEvent;
 
         addEvent = findViewById(R.id.Create_EventBTN);
         addCateg = findViewById(R.id.Create_CategoryBTN);
+        recView = findViewById(R.id.categoryRecycler);
+
+        // initialize DB
+
+        AppDB = AppDatabase.getDbInstance(this);
+        // store DB value in data list
+        dataList = AppDB.categoryDao().getAllC();
+        //initialize LLM
+        linearLayoutManager = new LinearLayoutManager(this);
+
+        recView.setLayoutManager(linearLayoutManager);
+        // initialize adapter
+        adapter = new categoryAdapter(dataList,MainActivity.this );
+        // set adapter
+        recView.setAdapter(adapter);
+
+
 
     }
 
