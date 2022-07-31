@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey;
 
 @Entity(tableName = "task_table")
 public class User {
-    @PrimaryKey
+    @PrimaryKey (autoGenerate = true)
     public int uid;
 
     @ColumnInfo(name = "task_name")
