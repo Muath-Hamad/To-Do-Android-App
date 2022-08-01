@@ -69,7 +69,7 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.MyView
         holder.editBTN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent h =  new Intent(context, Create_Event.class);
+                Intent h =  new Intent(context, UpdateTask.class);
                 context.startActivity(h);
             }
         });

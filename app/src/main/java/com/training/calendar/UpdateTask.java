@@ -14,6 +14,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TimePicker;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
 
@@ -22,9 +23,7 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
-public class Create_Event extends AppCompatActivity {
-
-
+public class UpdateTask extends AppCompatActivity {
     private DatePickerDialog datePickerDialog;
     private Button StartDate , EndDate ,StartTime , EndTime; // these at first will have today's date until changed by user
     private String date;
@@ -37,20 +36,16 @@ public class Create_Event extends AppCompatActivity {
     private AppDatabase AppDB;
     private AutoCompleteTextView autoCompleteTextView;
     private ArrayAdapter<String> adapterItems;
-
-
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create_event);
-
-        initAllViews();
-        initSwitchListener();
-        initDatePicker();
-        initDropDownList();
+        setContentView(R.layout.activity_update_task);
+        initAllViews1();
+        initSwitchListener1();
+        initDatePicker1();
+        initDropDownList1();
 
     }
-
     public String getDate() {
         return date;
     }
@@ -60,7 +55,7 @@ public class Create_Event extends AppCompatActivity {
     public String getEventDesc() {
         return String.valueOf(eventDecs.getText());
     }
-    private void initDropDownList() {
+    private void initDropDownList1() {
         // initialize DB
         AppDB = AppDatabase.getDbInstance(this);
         // store DB value in data list
@@ -87,24 +82,24 @@ public class Create_Event extends AppCompatActivity {
         });
 
     }
-    private void initAllViews() {
-        StartTime = findViewById(R.id.StartTimePicker);
-        EndTime = findViewById(R.id.EndTimePicker);
-        eventTitle = findViewById(R.id.TitleEdit);
-        eventDecs = findViewById(R.id.taskDesc);
-        StartDate = findViewById(R.id.CategoryColorPicker);
-        EndDate = findViewById(R.id.EndDatePicker);
+    private void initAllViews1() {
+        StartTime = findViewById(R.id.StartTimeUpdate);
+        EndTime = findViewById(R.id.EndTimeUpdate);
+        eventTitle = findViewById(R.id.titleUpdate);
+        eventDecs = findViewById(R.id.descUpdate);
+        StartDate = findViewById(R.id.StartDateUpdate);
+        EndDate = findViewById(R.id.EndDateUpdate);
         StartDate.setText(getTodaysDate());
         EndDate.setText(getTodaysDate());
-        dateSwitch = findViewById(R.id.DateSwitch);
-        autoCompleteTextView = findViewById(R.id.auto_complete_text);
+        dateSwitch = findViewById(R.id.DateSwitchUpdate);
+        autoCompleteTextView = findViewById(R.id.auto_complete_text_Update);
 //         default state
         StartDate.setClickable(false);
         EndDate.setClickable(false);
         StartTime.setClickable(false);
         EndTime.setClickable(false);
     }
-    private void initSwitchListener() {
+    private void initSwitchListener1() {
 
         dateSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -133,7 +128,7 @@ public class Create_Event extends AppCompatActivity {
         int day = cal.get(Calendar.DAY_OF_MONTH);
         return makeDateString(year , month , day);
     }
-    private void initDatePicker() {
+    private void initDatePicker1() {
 
         DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
             @Override
@@ -175,7 +170,7 @@ public class Create_Event extends AppCompatActivity {
         //Default should never be reached
         return "JAN";
     }
-    public  void  openDatePicker(View view){
+    public  void  openDatePicker1(View view){
         if (view.equals(StartDate)){ // this will excute if the user clicks starts date picker
             Caller = true;
             datePickerDialog.show();
@@ -186,7 +181,7 @@ public class Create_Event extends AppCompatActivity {
         }
 
     }
-    public void popTimePicker(View view){
+    public void popTimePicker1(View view){
         TimePickerDialog.OnTimeSetListener onTimeSetListener = new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
@@ -205,12 +200,12 @@ public class Create_Event extends AppCompatActivity {
         timePickerDialog.setTitle("Select Time");
         timePickerDialog.show();
     }
-    public void SaveButton(View view) { // this method is empty at the moment the plan is to make it save data to DB and go back to main page
+    public void SaveButton1(View view) { // this method is empty at the moment the plan is to make it save data to DB and go back to main page
         AppDatabase db = AppDatabase.getDbInstance(this.getApplicationContext());
         User user = new User();
         user.taskName = getEventTitle();
-        user.description = getEventTitle();
-        user.date = getDate();
+        user.description = getEventDesc();
+        user.date = date;
         db.userDao().insertAll(user);
         finish();
 
