@@ -35,10 +35,21 @@ public class Create_Event extends AppCompatActivity {
     private SwitchCompat dateSwitch;
     private List<CategoryData> categoryDataList = new ArrayList<>();
     private AppDatabase AppDB;
-
-
     private AutoCompleteTextView autoCompleteTextView;
     private ArrayAdapter<String> adapterItems;
+
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_create_event);
+
+        initAllViews();
+        initSwitchListener();
+        initDatePicker();
+        initDropDownList();
+
+    }
 
     public String getDate() {
         return date;
@@ -49,16 +60,7 @@ public class Create_Event extends AppCompatActivity {
     public String getEventDesc() {
         return String.valueOf(eventDecs.getText());
     }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create_event);
-        initAllViews();
-        initSwitchListener();
-        initDatePicker();
-
-
+    private void initDropDownList() {
         // initialize DB
         AppDB = AppDatabase.getDbInstance(this);
         // store DB value in data list
@@ -71,9 +73,6 @@ public class Create_Event extends AppCompatActivity {
             items[i] =  data.getTitle();
             i++;
         }
-
-
-
         adapterItems = new ArrayAdapter<String>(this,R.layout.category_list_item,items);
         autoCompleteTextView.setAdapter(adapterItems);
 
@@ -106,6 +105,7 @@ public class Create_Event extends AppCompatActivity {
         EndTime.setClickable(false);
     }
     private void initSwitchListener() {
+
         dateSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean Checked) {
@@ -159,7 +159,6 @@ public class Create_Event extends AppCompatActivity {
     private String makeDateString(int day, int month, int year) {
         return getMonthFormat(month) + " " + day + " " + year;
     }
-
     private String getMonthFormat(int month) { // this method is to get the "String" value instead of Digital
         if (month == 1) return "JAN";
         if (month == 2) return "FEB";
@@ -176,7 +175,6 @@ public class Create_Event extends AppCompatActivity {
         //Default should never be reached
         return "JAN";
     }
-
     public  void  openDatePicker(View view){
         if (view.equals(StartDate)){ // this will excute if the user clicks starts date picker
             Caller = true;
@@ -188,7 +186,6 @@ public class Create_Event extends AppCompatActivity {
         }
 
     }
-
     public void popTimePicker(View view){
         TimePickerDialog.OnTimeSetListener onTimeSetListener = new TimePickerDialog.OnTimeSetListener() {
             @Override
@@ -208,7 +205,6 @@ public class Create_Event extends AppCompatActivity {
         timePickerDialog.setTitle("Select Time");
         timePickerDialog.show();
     }
-
     public void SaveButton(View view) { // this method is empty at the moment the plan is to make it save data to DB and go back to main page
         AppDatabase db = AppDatabase.getDbInstance(this.getApplicationContext());
         User user = new User();
