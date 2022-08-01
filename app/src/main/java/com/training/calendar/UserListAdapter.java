@@ -38,7 +38,21 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.MyView
     public void onBindViewHolder(@NonNull UserListAdapter.MyViewHolder holder, int position) {
         holder.taskName.setText(this.userList.get(position).taskName);
         holder.date.setText(this.userList.get(position).date);
-
+//        holder.deleteBTN.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//                UserListAdapter Pos = userList.get(holder.getAdapterPosition());
+//                // Delete category from DB
+//                DB.categoryDao().delete(Pos);
+//                // Notify when data is deleted
+//                int position = holder.getAdapterPosition();
+//                userList.remove(position);
+//                notifyItemRemoved(position);
+//                notifyItemRangeChanged(position , userList.size());
+//
+//            }
+//        });git
 
     }
 
