@@ -53,7 +53,6 @@
         android:ems="10"
         android:hint="@string/hint_name_edit"
         android:inputType="textPersonName"
-        android:text="Name"
         android:visibility="gone"
         android:clickable="false"
         app:layout_constraintBottom_toBottomOf="parent"

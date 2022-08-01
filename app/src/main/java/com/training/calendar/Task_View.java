@@ -1,6 +1,7 @@
 package com.training.calendar;
 
 import android.os.Bundle;
+import android.widget.ImageView;
 import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,14 +12,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 public class Task_View extends AppCompatActivity {
-
+    private ImageView update;
     private ListView noteListView;
     private UserListAdapter userListAdapter;
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
+        update = findViewById(R.id.taskEditBTN);
         setContentView(R.layout.activity_task_view);
         initRecyclerView();
         loadUserList();
+
     }
     private void initRecyclerView(){
         RecyclerView recyclerView = findViewById(R.id.RecyclerView);
@@ -35,6 +38,7 @@ public class Task_View extends AppCompatActivity {
         List<User> userList =db.userDao().getAll();
         userListAdapter.setUserList(userList);
     }
+
 
 
 }
