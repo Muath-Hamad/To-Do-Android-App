@@ -15,7 +15,7 @@ public interface UserDao {
     @Query("SELECT * FROM task_table WHERE uid IN (:userIds)")
     List<User> loadAllByIds(int[] userIds);
 
-    @Query("SELECT * FROM task_table WHERE task_name LIKE :first AND " +
+    @Query("SELECT* FROM task_table WHERE task_name LIKE :first AND " +
             "date LIKE :last LIMIT 1")
     User findByName(String first, String last);
 
@@ -24,4 +24,7 @@ public interface UserDao {
 
     @Delete
     void delete(User user);
+
+
+
 }

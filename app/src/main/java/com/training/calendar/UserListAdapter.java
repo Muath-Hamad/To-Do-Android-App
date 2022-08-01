@@ -1,6 +1,7 @@
 package com.training.calendar;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,6 +54,7 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.MyView
             @Override
             public void onClick(View view) {
 
+
                 User Pos = userList.get(holder.getAdapterPosition());
                 // Delete category from DB
                 DB.userDao().delete(Pos);
@@ -62,6 +64,13 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.MyView
                 notifyItemRemoved(position);
                 notifyItemRangeChanged(position , userList.size());
 
+            }
+        });
+        holder.editBTN.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent h =  new Intent(context, Create_Event.class);
+                context.startActivity(h);
             }
         });
 
