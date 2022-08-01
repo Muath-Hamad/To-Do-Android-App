@@ -29,10 +29,8 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     boolean isShown = false;
-    FloatingActionButton addCateg , addEvent;
-
+    FloatingActionButton addCateg, addEvent;
     RecyclerView recView;
-
     List<CategoryData> dataList = new ArrayList<>();
     AppDatabase AppDB;
     categoryAdapter adapter;
@@ -43,13 +41,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         addEvent = findViewById(R.id.Create_EventBTN);
         addCateg = findViewById(R.id.Create_CategoryBTN);
         recView = findViewById(R.id.categoryRecycler);
-
         // initialize DB
-
         AppDB = AppDatabase.getDbInstance(this);
         // store DB value in data list
         dataList = AppDB.categoryDao().getAllC();
@@ -58,27 +53,27 @@ public class MainActivity extends AppCompatActivity {
 
         recView.setLayoutManager(linearLayoutManager);
         // initialize adapter
-        adapter = new categoryAdapter(dataList,MainActivity.this );
+        adapter = new categoryAdapter(dataList, MainActivity.this);
         // set adapter
         recView.setAdapter(adapter);
 
 
-
     }
 
-    public void AddTask(View v){
-         if (isShown){
+    public void AddTask(View v) {
+        if (isShown) {
             addCateg.setVisibility(View.INVISIBLE);
             addEvent.setVisibility(View.INVISIBLE);
             isShown = false;
-        }else{
+        } else {
             addCateg.setVisibility(View.VISIBLE);
             addEvent.setVisibility(View.VISIBLE);
             isShown = true;
         }
     }
-    public void TaskView(View v){
-        Intent h = new Intent(MainActivity.this , Task_View.class);
+
+    public void TaskView(View v) {
+        Intent h = new Intent(MainActivity.this, Task_View.class);
         startActivity(h);
     }
 

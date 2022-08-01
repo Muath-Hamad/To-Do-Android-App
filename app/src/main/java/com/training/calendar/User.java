@@ -14,4 +14,11 @@ public class User {
 
     @ColumnInfo(name = "date")
     public String date;
+
+    @ColumnInfo(name = "Description")
+    public String description;
+
+    @ColumnInfo(name = "Category")
+    public String cat;
+
 }

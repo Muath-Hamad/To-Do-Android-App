@@ -23,14 +23,19 @@ public class Create_Event extends AppCompatActivity {
     private String date;
     private boolean Caller; // this is set by the clicked button
     private int hour , minute;
-    private EditText eventTitle; // this will have the name of the event entered by the user
+    private EditText eventTitle;// this will have the name of the event entered by the user
+    private EditText eventDecs;
+
+
 
     public String getDate() {
         return date;
     }
-
     public String getEventTitle() {
         return String.valueOf(eventTitle.getText());
+    }
+    public String getEventDesc() {
+        return String.valueOf(eventDecs.getText());
     }
 
     @Override
@@ -40,21 +45,14 @@ public class Create_Event extends AppCompatActivity {
         StartTime = findViewById(R.id.StartTimePicker);
         EndTime = findViewById(R.id.EndTimePicker);
         eventTitle = findViewById(R.id.TitleEdit);
-
+        eventDecs = findViewById(R.id.taskDesc);
         initDatePicker();
         StartDate = findViewById(R.id.CategoryColorPicker);
         EndDate = findViewById(R.id.EndDatePicker);
         StartDate.setText(getTodaysDate());
         EndDate.setText(getTodaysDate());
 
-        eventTitle.setOnClickListener(new View.OnClickListener() { // clear field on first use
-            @Override
-            public void onClick(View view) {
-                if (getString(R.string.eventTitleText).equals(eventTitle.getText().toString())){
-                    eventTitle.setText("");
-                }
-            }
-        });
+
 
     }
 
@@ -150,7 +148,8 @@ public class Create_Event extends AppCompatActivity {
     public void SaveButton(View view) { // this method is empty at the moment the plan is to make it save data to DB and go back to main page
         AppDatabase db = AppDatabase.getDbInstance(this.getApplicationContext());
         User user = new User();
-        user.taskName = eventTitle.getText().toString();
+        user.taskName = getEventTitle();
+        user.description = getEventTitle();
         user.date = date;
         db.userDao().insertAll(user);
         finish();

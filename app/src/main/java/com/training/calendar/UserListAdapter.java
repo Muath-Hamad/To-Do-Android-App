@@ -17,6 +17,12 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.MyView
     private List<User> userList;
     private AppDatabase DB;
 
+    public UserListAdapter(Context context , List<User> userList) {
+        this.context = context;
+        this.userList = userList;
+        notifyDataSetChanged();
+    }
+
     public UserListAdapter(Context context) {
         this.context = context;
     }
@@ -36,23 +42,27 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.MyView
 
     @Override
     public void onBindViewHolder(@NonNull UserListAdapter.MyViewHolder holder, int position) {
+        User data = userList.get(position);
+        DB = AppDatabase.getDbInstance(context);
+
         holder.taskName.setText(this.userList.get(position).taskName);
+        holder.taskDesc.setText(this.userList.get(position).description);
         holder.date.setText(this.userList.get(position).date);
-//        holder.deleteBTN.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//
-//                UserListAdapter Pos = userList.get(holder.getAdapterPosition());
-//                // Delete category from DB
-//                DB.categoryDao().delete(Pos);
-//                // Notify when data is deleted
-//                int position = holder.getAdapterPosition();
-//                userList.remove(position);
-//                notifyItemRemoved(position);
-//                notifyItemRangeChanged(position , userList.size());
-//
-//            }
-//        });git
+        holder.deleteBTN.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                User Pos = userList.get(holder.getAdapterPosition());
+                // Delete category from DB
+                DB.userDao().delete(Pos);
+                // Notify when data is deleted
+                int position = holder.getAdapterPosition();
+                userList.remove(position);
+                notifyItemRemoved(position);
+                notifyItemRangeChanged(position , userList.size());
+
+            }
+        });
 
     }
 
@@ -63,6 +73,7 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.MyView
     public class MyViewHolder extends RecyclerView.ViewHolder{
         TextView taskName;
         TextView date;
+        TextView taskDesc;
         ImageView editBTN;
         ImageView deleteBTN;
 
@@ -70,6 +81,7 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.MyView
         public MyViewHolder(View itemView) {
             super(itemView);
             taskName = itemView.findViewById(R.id.TaskName);
+            taskDesc = itemView.findViewById(R.id.description_Field);
             date = itemView.findViewById(R.id.Date);
             editBTN = itemView.findViewById(R.id.taskEditBTN);
             deleteBTN = itemView.findViewById(R.id.taskDeleteBTN);

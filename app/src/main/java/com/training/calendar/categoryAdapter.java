@@ -76,8 +76,8 @@ private AppDatabase DB;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-TextView cTitle;
-ImageView btEdit , btDelete;
+        TextView cTitle;
+        ImageView btEdit , btDelete;
 
 
         public ViewHolder(@NonNull View itemView) {
