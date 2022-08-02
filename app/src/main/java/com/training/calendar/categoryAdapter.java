@@ -1,13 +1,10 @@
 package com.training.calendar;
 
 import android.app.Activity;
-import android.app.Dialog;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -53,6 +50,22 @@ private AppDatabase DB;
             @Override
             public void onClick(View view) {
                 // has no action for now
+
+                CategoryData data = categoryDataList.get(holder.getAdapterPosition());
+                int sID = data.getID();
+                String sTitle = data.getTitle();
+                int sColor = data.getColor();
+
+
+                Intent i = new Intent(context , Create_Category.class);
+                i.putExtra("EXTRA_CATEGORY_ID", sID);
+                i.putExtra("EXTRA_CATEGORY_TITLE", sTitle);
+                i.putExtra("EXTRA_CATEGORY_COLOR", sColor);
+                i.putExtra("EXTRA_CATEGORY_UPDATE", true);
+
+                context.startActivity(i);
+
+
             }
         });
         // set action for delete button
@@ -70,36 +83,6 @@ private AppDatabase DB;
             notifyItemRangeChanged(position , categoryDataList.size());
 
         }
-        });
-        holder.btEdit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                CategoryData d = categoryDataList.get(holder.getAdapterPosition());
-                int sID = d.getID();
-                String sText = d.getTitle();
-
-                Dialog dialog = new Dialog(context);
-                dialog.setContentView(R.layout.activity_update_category);
-                int width = WindowManager.LayoutParams.MATCH_PARENT;
-                int height = WindowManager.LayoutParams.WRAP_CONTENT;
-                dialog.getWindow().setLayout(width, height);
-                dialog.show();
-                EditText CatUpd = dialog.findViewById(R.id.categoryUpdate);
-                Button btUpdate = dialog.findViewById(R.id.CatUpBTN);
-                CatUpd.setText(sText);
-                btUpdate.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                        String uText = CatUpd.getText().toString();
-                        d.setTitle(uText);
-                        DB.categoryDao().Update(d);
-                        notifyDataSetChanged();
-                        dialog.dismiss();
-
-                    }
-                });
-            }
         });
 
     }
