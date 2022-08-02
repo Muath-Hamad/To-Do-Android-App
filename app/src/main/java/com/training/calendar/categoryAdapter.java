@@ -45,6 +45,7 @@ private AppDatabase DB;
         DB = AppDatabase.getDbInstance(context);
         // set text
         holder.cTitle.setText(data.getTitle());
+        holder.colorDis.setColorFilter(data.getColor());
         // set action for edit button
         holder.btEdit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,7 +95,7 @@ private AppDatabase DB;
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView cTitle;
-        ImageView btEdit , btDelete;
+        ImageView btEdit , btDelete , colorDis;
 
 
         public ViewHolder(@NonNull View itemView) {
@@ -102,6 +103,7 @@ private AppDatabase DB;
             cTitle = itemView.findViewById(R.id.categoryRowTitle);
             btEdit = itemView.findViewById(R.id.catgEditBTN);
             btDelete = itemView.findViewById(R.id.catgDeleteBTN);
+            colorDis = itemView.findViewById(R.id.catgColorDisplay);
 
 
         }
