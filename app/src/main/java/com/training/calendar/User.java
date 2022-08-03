@@ -21,4 +21,14 @@ public class User {
     @ColumnInfo(name = "Category")
     public String cat;
 
+    @ColumnInfo(name = "Done")
+    public Boolean done;
+
+    public Boolean getDone() {
+        return done;
+    }
+
+    public void setDone(Boolean done) {
+        this.done = done;
+    }
 }

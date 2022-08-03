@@ -205,6 +205,7 @@ public class Create_Event extends AppCompatActivity {
         timePickerDialog.setTitle("Select Time");
         timePickerDialog.show();
     }
+
     public void SaveButton(View view) { // this method is empty at the moment the plan is to make it save data to DB and go back to main page
         AppDatabase db = AppDatabase.getDbInstance(this.getApplicationContext());
         User user = new User();
@@ -212,6 +213,7 @@ public class Create_Event extends AppCompatActivity {
         user.description = getEventDesc().toString();
         user.cat = Category;
         user.date = getDate();
+        user.setDone(false);
         db.userDao().insertAll(user);
         finish();
 

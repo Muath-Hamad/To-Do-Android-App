@@ -32,6 +32,11 @@ public interface UserDao {
     @Update
     void Update(User user);
 
-    @Query("UPDATE task_table SET Category = :newCat WHERE Category = :oldCat" )
-            void updateCat(String oldCat , String newCat);
+    @Query("UPDATE task_table SET Category = :newCat WHERE Category = :oldCat")
+    void updateCat(String oldCat, String newCat);
+
+    @Query("UPDATE task_table SET Done = :setDone WHERE uid = :sID")
+    void setDone(int sID , boolean setDone);
+
+
 }

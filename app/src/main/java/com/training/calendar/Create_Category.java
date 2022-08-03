@@ -21,6 +21,7 @@ public class Create_Category extends AppCompatActivity {
     AppDatabase db;
     CategoryData data ;
     int IDtoUpdate;
+    String oldCat;
     // this at first will have default color until changed by user
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +62,8 @@ public class Create_Category extends AppCompatActivity {
                 String sText = categoryTitle.getText().toString().trim();
                 if (!sText.equals("")) {
                     db.categoryDao().update(IDtoUpdate, sText, ChosenColor);
+                    oldCat = getIntent().getStringExtra("EXTRA_CATEGORY_TITLE");
+                    db.userDao().updateCat(oldCat,sText);
 
                     Intent i2 = new Intent(Create_Category.this, MainActivity.class);
                     startActivity(i2);
