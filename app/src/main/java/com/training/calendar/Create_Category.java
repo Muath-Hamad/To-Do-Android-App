@@ -1,14 +1,14 @@
 package com.training.calendar;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import yuku.ambilwarna.AmbilWarnaDialog;
 
@@ -44,7 +44,10 @@ public class Create_Category extends AppCompatActivity {
 
             if (IDtoUpdate == -1){
                 throw new java.lang.Error("ERROR!!: Default ID received -1 ");
-            }else{ SaveUpdateButton();}
+            }else{
+                String oldCat = getIntent().getStringExtra("EXTRA_CATEGORY_TITLE");
+                db.userDao().updateCat("Work", "hello");
+                SaveUpdateButton();}
 
         }else{
             SaveNewButton();

@@ -55,7 +55,7 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.MyView
 
         holder.taskName.setText(this.userList.get(position).taskName);
         holder.taskDesc.setText(this.userList.get(position).description);
-        holder.date.setText(this.userList.get(position).date);
+        holder.date.setText(this.userList.get(position).cat);
         holder.deleteBTN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
