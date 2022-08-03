@@ -2,6 +2,7 @@ package com.training.calendar;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.graphics.Paint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,7 +56,34 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.MyView
 
         holder.taskName.setText(this.userList.get(position).taskName);
         holder.taskDesc.setText(this.userList.get(position).description);
-        holder.date.setText(this.userList.get(position).cat);
+        holder.catDisplay.setText(this.userList.get(position).cat);
+
+        if (data.getDone()){
+
+            holder.taskName.setPaintFlags(holder.taskName.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+            holder.taskDesc.setPaintFlags(holder.taskName.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+            holder.catDisplay.setPaintFlags(holder.taskName.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+        }
+
+        holder.DoneBTN.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                User instance = userList.get(holder.getAdapterPosition());
+                int id = instance.uid;
+                if (!holder.taskName.getPaint().isStrikeThruText()){
+                    DB.userDao().setDone(id , true);
+                    holder.taskName.setPaintFlags(holder.taskName.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                    holder.taskDesc.setPaintFlags(holder.taskName.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                    holder.catDisplay.setPaintFlags(holder.taskName.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                }else{
+                    DB.userDao().setDone(id , false);
+                    holder.taskName.setPaintFlags(holder.taskName.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
+                    holder.taskDesc.setPaintFlags(holder.taskName.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
+                    holder.catDisplay.setPaintFlags(holder.taskName.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
+                }
+            }
+        });
+
         holder.deleteBTN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -75,9 +103,7 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.MyView
         holder.editBTN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Intent h =  new Intent(context, UpdateTask.class);
-//                h.putExtra("pos" , "hello");
-//                context.startActivity(h);
+
                 User d = userList.get(holder.getAdapterPosition());
                 int sID = d.uid;
                 String sText = d.taskName;
@@ -122,19 +148,21 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.MyView
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         TextView taskName;
-        TextView date;
+        TextView catDisplay;
         TextView taskDesc;
         ImageView editBTN;
         ImageView deleteBTN;
+        ImageView DoneBTN;
 
 
         public MyViewHolder(View itemView) {
             super(itemView);
             taskName = itemView.findViewById(R.id.TaskName);
             taskDesc = itemView.findViewById(R.id.description_Field);
-            date = itemView.findViewById(R.id.Date);
+            catDisplay = itemView.findViewById(R.id.Date);
             editBTN = itemView.findViewById(R.id.taskEditBTN);
             deleteBTN = itemView.findViewById(R.id.taskDeleteBTN);
+            DoneBTN = itemView.findViewById(R.id.taskDoneBTN);
 
         }
     }

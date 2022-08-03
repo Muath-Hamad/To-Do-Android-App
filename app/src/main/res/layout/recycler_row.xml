@@ -41,20 +41,38 @@
             android:textColor="#000000"
             android:textSize="12sp" />
     </LinearLayout>
-    <ImageView
-        android:id="@+id/taskEditBTN"
+    <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:src="@drawable/ic_edit"
-        android:onClick="updateTasK"></ImageView>
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="10dp"
+        >
 
-    <ImageView
-        android:id="@+id/taskDeleteBTN"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:src="@drawable/ic_delete"></ImageView>
+        <ImageView
+            android:id="@+id/taskDoneBTN"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:src="@drawable/ic_done_circle"
+            ></ImageView>
+
+        <ImageView
+            android:id="@+id/taskEditBTN"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:src="@drawable/ic_edit"
+            android:onClick="updateTasK"></ImageView>
+
+        <ImageView
+            android:id="@+id/taskDeleteBTN"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:src="@drawable/ic_delete"></ImageView>
+
+    </LinearLayout>
+
 </LinearLayout>
 
 
