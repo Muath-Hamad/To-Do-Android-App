@@ -37,6 +37,7 @@ public class Create_Event extends AppCompatActivity {
     private AppDatabase AppDB;
     private AutoCompleteTextView autoCompleteTextView;
     private ArrayAdapter<String> adapterItems;
+    private String Category;
 
 
     @Override
@@ -75,12 +76,11 @@ public class Create_Event extends AppCompatActivity {
         }
         adapterItems = new ArrayAdapter<String>(this,R.layout.category_list_item,items);
         autoCompleteTextView.setAdapter(adapterItems);
-
         autoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
 
-                String item = adapterView.getItemAtPosition(position).toString(); // store selection in item
+                 Category = adapterView.getItemAtPosition(position).toString(); // store selection in item
 
 
             }
@@ -210,6 +210,7 @@ public class Create_Event extends AppCompatActivity {
         User user = new User();
         user.taskName = getEventTitle().toString();
         user.description = getEventDesc().toString();
+        user.cat = Category;
         user.date = getDate();
         db.userDao().insertAll(user);
         finish();

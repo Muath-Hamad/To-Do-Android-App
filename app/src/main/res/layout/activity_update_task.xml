@@ -191,7 +191,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-        android:hint="Select">
+        android:hint="Select Category">
 
         <AutoCompleteTextView
             android:layout_width="match_parent"
