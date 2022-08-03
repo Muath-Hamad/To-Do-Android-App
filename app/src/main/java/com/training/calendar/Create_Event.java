@@ -208,8 +208,8 @@ public class Create_Event extends AppCompatActivity {
     public void SaveButton(View view) { // this method is empty at the moment the plan is to make it save data to DB and go back to main page
         AppDatabase db = AppDatabase.getDbInstance(this.getApplicationContext());
         User user = new User();
-        user.taskName = getEventTitle();
-        user.description = getEventTitle();
+        user.taskName = getEventTitle().toString();
+        user.description = getEventDesc().toString();
         user.date = getDate();
         db.userDao().insertAll(user);
         finish();

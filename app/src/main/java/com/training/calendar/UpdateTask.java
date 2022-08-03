@@ -36,6 +36,10 @@ public class UpdateTask extends AppCompatActivity {
     private AppDatabase AppDB;
     private AutoCompleteTextView autoCompleteTextView;
     private ArrayAdapter<String> adapterItems;
+
+
+
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +48,9 @@ public class UpdateTask extends AppCompatActivity {
         initSwitchListener1();
         initDatePicker1();
         initDropDownList1();
+        String hello = getIntent().getStringExtra("pos");
+        eventTitle.setText(hello);
+
 
     }
     public String getDate() {
@@ -203,11 +210,13 @@ public class UpdateTask extends AppCompatActivity {
     public void SaveButton1(View view) { // this method is empty at the moment the plan is to make it save data to DB and go back to main page
         AppDatabase db = AppDatabase.getDbInstance(this.getApplicationContext());
         User user = new User();
-        user.taskName = getEventTitle();
-        user.description = getEventDesc();
-        user.date = date;
+        user.taskName = getEventTitle().toString();
+        user.description = getEventDesc().toString();
+        user.date = getDate();
         db.userDao().insertAll(user);
         finish();
 
     }
+
+
 }
