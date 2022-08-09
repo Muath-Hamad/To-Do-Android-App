@@ -22,6 +22,7 @@ public class Create_Category extends AppCompatActivity {
     CategoryData data ;
     int IDtoUpdate;
     String oldCat;
+    String sText;
     // this at first will have default color until changed by user
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +48,8 @@ public class Create_Category extends AppCompatActivity {
                 throw new java.lang.Error("ERROR!!: Default ID received -1 ");
             }else{
                 String oldCat = getIntent().getStringExtra("EXTRA_CATEGORY_TITLE");
-                db.userDao().updateCat("Work", "hello");
+                sText = categoryTitle.getText().toString();
+                db.userDao().updateCat(oldCat, sText);
                 SaveUpdateButton();}
 
         }else{
@@ -59,16 +61,14 @@ public class Create_Category extends AppCompatActivity {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String sText = categoryTitle.getText().toString().trim();
-                if (!sText.equals("")) {
+                sText = categoryTitle.getText().toString();
                     db.categoryDao().update(IDtoUpdate, sText, ChosenColor);
                     oldCat = getIntent().getStringExtra("EXTRA_CATEGORY_TITLE");
                     db.userDao().updateCat(oldCat,sText);
-
                     Intent i2 = new Intent(Create_Category.this, MainActivity.class);
                     startActivity(i2);
                     finish();
-                }
+
             }
         });
     }
