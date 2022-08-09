@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -46,6 +47,17 @@ private AppDatabase DB;
         // set text
         holder.cTitle.setText(data.getTitle());
         holder.colorDis.setColorFilter(data.getColor());
+        holder.catBTN.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent h = new Intent(context, Task_View.class);
+                h.putExtra("EXTRA_CATname",holder.cTitle.getText());
+                h.putExtra("EXTRA_isCAT",true);
+                context.startActivity(h);
+            }
+        });
+
         // set action for edit button
         holder.btEdit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -96,6 +108,7 @@ private AppDatabase DB;
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView cTitle;
         ImageView btEdit , btDelete , colorDis;
+        LinearLayout catBTN;
 
 
         public ViewHolder(@NonNull View itemView) {
@@ -104,6 +117,7 @@ private AppDatabase DB;
             btEdit = itemView.findViewById(R.id.catgEditBTN);
             btDelete = itemView.findViewById(R.id.catgDeleteBTN);
             colorDis = itemView.findViewById(R.id.catgColorDisplay);
+            catBTN = itemView.findViewById(R.id.CatBTN);
 
 
         }

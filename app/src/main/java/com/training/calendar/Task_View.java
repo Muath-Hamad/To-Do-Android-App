@@ -39,7 +39,11 @@ public class Task_View extends AppCompatActivity {
         AppDatabase db = AppDatabase.getDbInstance(this.getApplicationContext());
         List<User> userList;
 
-        if (getIntent().getBooleanExtra("EXTRA_TODAY",false)){ // if the caller is today button then today will be loaded in the list else all events will be loaded
+        if (getIntent().getBooleanExtra("EXTRA_isCAT",false)){
+            String catname = getIntent().getStringExtra("EXTRA_CATname");
+            userList = db.userDao().getByCategory(catname);
+
+        }else if (getIntent().getBooleanExtra("EXTRA_TODAY",false)){ // if the caller is today button then today will be loaded in the list else all events will be loaded
             userList = db.userDao().getToday(TodayDate , true); // second argument will ensure that only events will be loaded
         }else{
             userList =db.userDao().getAll();
