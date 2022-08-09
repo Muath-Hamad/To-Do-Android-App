@@ -19,6 +19,9 @@ public interface UserDao {
     @Query("SELECT * FROM task_table WHERE Category = :category")
     List<User> getByCategory(String category);
 
+    @Query("SELECT * FROM task_table WHERE StartDate = :date AND hasDate = :today")
+    List<User> getToday(String date ,boolean today);
+
     @Query("SELECT * FROM task_table WHERE uid IN (:userIds)")
     List<User> loadAllByIds(int[] userIds);
 

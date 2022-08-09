@@ -60,8 +60,8 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.MyView
         if (data.getDone()){
 
             holder.taskName.setPaintFlags(holder.taskName.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-            holder.taskDesc.setPaintFlags(holder.taskName.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-            holder.catDisplay.setPaintFlags(holder.taskName.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+//            holder.taskDesc.setPaintFlags(holder.taskName.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+//            holder.catDisplay.setPaintFlags(holder.taskName.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
         }
 
         holder.DoneBTN.setOnClickListener(new View.OnClickListener() {
@@ -72,13 +72,13 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.MyView
                 if (!holder.taskName.getPaint().isStrikeThruText()){
                     DB.userDao().setDone(id , true);
                     holder.taskName.setPaintFlags(holder.taskName.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-                    holder.taskDesc.setPaintFlags(holder.taskName.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-                    holder.catDisplay.setPaintFlags(holder.taskName.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+//                    holder.taskDesc.setPaintFlags(holder.taskName.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+//                    holder.catDisplay.setPaintFlags(holder.taskName.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
                 }else{
                     DB.userDao().setDone(id , false);
                     holder.taskName.setPaintFlags(holder.taskName.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
-                    holder.taskDesc.setPaintFlags(holder.taskName.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
-                    holder.catDisplay.setPaintFlags(holder.taskName.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
+//                    holder.taskDesc.setPaintFlags(holder.taskName.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
+//                    holder.catDisplay.setPaintFlags(holder.taskName.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
                 }
             }
         });
@@ -89,6 +89,9 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.MyView
             public void onClick(View v) {
 
                 User d = userList.get(holder.getAdapterPosition());
+                System.out.println("?????????????????????????");
+                System.out.println(d.getStartDate());
+                System.out.println("?????????????????????????");
                 int sID = d.uid;
                 String sText = d.taskName;
                 String sDesc = d.description;

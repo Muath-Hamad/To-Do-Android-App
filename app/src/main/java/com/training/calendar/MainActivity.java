@@ -35,12 +35,14 @@ public class MainActivity extends AppCompatActivity {
     AppDatabase AppDB;
     categoryAdapter adapter;
     LinearLayoutManager linearLayoutManager;
+    Button TodayB;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        TodayB = findViewById(R.id.TodayBTN);
         addEvent = findViewById(R.id.Create_EventBTN);
         addCateg = findViewById(R.id.Create_CategoryBTN);
         recView = findViewById(R.id.categoryRecycler);
@@ -58,6 +60,15 @@ public class MainActivity extends AppCompatActivity {
         recView.setAdapter(adapter);
 
 
+        TodayB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent h = new Intent(MainActivity.this, Task_View.class);
+                h.putExtra("EXTRA_TODAY",true);
+                startActivity(h);
+
+            }
+        });
     }
 
     public void AddTask(View v) {

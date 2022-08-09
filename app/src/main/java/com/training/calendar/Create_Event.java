@@ -134,7 +134,7 @@ public class Create_Event extends AppCompatActivity {
         int month = cal.get(Calendar.MONTH);
         month += 1;
         int day = cal.get(Calendar.DAY_OF_MONTH);
-        return makeDateString(year , month , day);
+        return makeDateString(day , month , year);
     }
     private void initDatePicker() {
 
