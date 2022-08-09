@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
@@ -23,14 +24,6 @@
             android:layout_weight="1"
             android:textColor="#000000"
             android:textSize="17sp" />
-        <TextView
-            android:id="@+id/description_Field"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="05dp"
-            android:layout_weight="1"
-            android:textColor="#000000"
-            android:textSize="12sp" />
 
         <TextView
             android:id="@+id/Date"
@@ -41,37 +34,24 @@
             android:textColor="#000000"
             android:textSize="12sp" />
     </LinearLayout>
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="10dp"
-        >
+
+
 
         <ImageView
             android:id="@+id/taskDoneBTN"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:src="@drawable/ic_done_circle"
-            ></ImageView>
+            android:src="@drawable/ic_done_circle"></ImageView>
 
-        <ImageView
-            android:id="@+id/taskEditBTN"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:src="@drawable/ic_edit"
-            android:onClick="updateTasK"></ImageView>
+    <ImageView
+        android:id="@+id/taskInfoBTN"
+        android:layout_width="31dp"
+        android:layout_height="34dp"
+        android:layout_marginStart="8dp"
+        android:onClick="updateTasK"
+        android:src="@drawable/ic_info"></ImageView>
 
-        <ImageView
-            android:id="@+id/taskDeleteBTN"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:src="@drawable/ic_delete"></ImageView>
-
-    </LinearLayout>
 
 </LinearLayout>
 

@@ -17,7 +17,6 @@ public class Task_View extends AppCompatActivity {
     private UserListAdapter userListAdapter;
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        update = findViewById(R.id.taskEditBTN);
         setContentView(R.layout.activity_task_view);
         initRecyclerView();
         loadUserList();

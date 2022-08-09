@@ -55,7 +55,6 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.MyView
         DB = AppDatabase.getDbInstance(context);
 
         holder.taskName.setText(this.userList.get(position).taskName);
-        holder.taskDesc.setText(this.userList.get(position).description);
         holder.catDisplay.setText(this.userList.get(position).cat);
 
         if (data.getDone()){
@@ -84,23 +83,8 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.MyView
             }
         });
 
-        holder.deleteBTN.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
 
-
-                User Pos = userList.get(holder.getAdapterPosition());
-                // Delete category from DB
-                DB.userDao().delete(Pos);
-                // Notify when data is deleted
-                int position = holder.getAdapterPosition();
-                userList.remove(position);
-                notifyItemRemoved(position);
-                notifyItemRangeChanged(position, userList.size());
-
-            }
-        });
-        holder.editBTN.setOnClickListener(new View.OnClickListener() {
+        holder.infoBTN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -117,6 +101,7 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.MyView
                 EditText titleUpd = dialog.findViewById(R.id.titleUpdate);
                 EditText descUp = dialog.findViewById(R.id.descUpdate);
                 Button btUpdate = dialog.findViewById(R.id.updateBTN);
+                ImageView deleteBTN = dialog.findViewById(R.id.taskDeleteBTN);
                 titleUpd.setText(sText);
                 descUp.setText(sDesc);
                 btUpdate.setOnClickListener(new View.OnClickListener() {
@@ -131,6 +116,22 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.MyView
                         notifyDataSetChanged();
                         dialog.dismiss();
 
+                    }
+                });
+                deleteBTN.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+
+                        User Pos = userList.get(holder.getAdapterPosition());
+                        // Delete category from DB
+                        DB.userDao().delete(Pos);
+                        // Notify when data is deleted
+                        int position = holder.getAdapterPosition();
+                        userList.remove(position);
+                        notifyItemRemoved(position);
+                        notifyItemRangeChanged(position, userList.size());
+                        dialog.dismiss();
                     }
                 });
 
@@ -150,19 +151,22 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.MyView
         TextView taskName;
         TextView catDisplay;
         TextView taskDesc;
-        ImageView editBTN;
-        ImageView deleteBTN;
+//        ImageView editBTN;
+//        ImageView deleteBTN;
         ImageView DoneBTN;
+        ImageView infoBTN;
 
 
         public MyViewHolder(View itemView) {
             super(itemView);
             taskName = itemView.findViewById(R.id.TaskName);
-            taskDesc = itemView.findViewById(R.id.description_Field);
+//            taskDesc = itemView.findViewById(R.id.description_Field);
             catDisplay = itemView.findViewById(R.id.Date);
-            editBTN = itemView.findViewById(R.id.taskEditBTN);
-            deleteBTN = itemView.findViewById(R.id.taskDeleteBTN);
+//            editBTN = itemView.findViewById(R.id.taskEditBTN);
+//            deleteBTN = itemView.findViewById(R.id.taskDeleteBTN);
             DoneBTN = itemView.findViewById(R.id.taskDoneBTN);
+            infoBTN = itemView.findViewById(R.id.taskInfoBTN);
+
 
         }
     }
