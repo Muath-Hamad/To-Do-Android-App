@@ -21,8 +21,61 @@ public class User {
     @ColumnInfo(name = "Category")
     public String cat;
 
+    @ColumnInfo(name = "StartDate")
+    public String StartDate;
+    @ColumnInfo(name = "EndDate")
+    public String EndDate;
+
+    @ColumnInfo(name = "StartTime")
+    public String StartTime;
+    @ColumnInfo(name = "EndTime")
+    public String EndTime;
+
+    @ColumnInfo(name = "hasDate")
+    public Boolean hasDate;
+
     @ColumnInfo(name = "Done")
     public Boolean done;
+
+    public String getStartDate() {
+        return StartDate;
+    }
+
+    public void setStartDate(String startDate) {
+        StartDate = startDate;
+    }
+
+    public String getEndDate() {
+        return EndDate;
+    }
+
+    public void setEndDate(String endDate) {
+        EndDate = endDate;
+    }
+
+    public String getStartTime() {
+        return StartTime;
+    }
+
+    public void setStartTime(String startTime) {
+        StartTime = startTime;
+    }
+
+    public String getEndTime() {
+        return EndTime;
+    }
+
+    public void setEndTime(String endTime) {
+        EndTime = endTime;
+    }
+
+    public Boolean getHasDate() {
+        return hasDate;
+    }
+
+    public void setHasDate(Boolean hasDate) {
+        this.hasDate = hasDate;
+    }
 
     public Boolean getDone() {
         return done;

@@ -13,6 +13,12 @@ public interface UserDao {
     @Query("SELECT * FROM task_table")
     List<User> getAll();
 
+//    @Query("SELECT * FROM task_table WHERE hasDate = :choice")
+//    List<User> getTasksOrEvents(boolean choice);
+
+    @Query("SELECT * FROM task_table WHERE Category = :category")
+    List<User> getByCategory(String category);
+
     @Query("SELECT * FROM task_table WHERE uid IN (:userIds)")
     List<User> loadAllByIds(int[] userIds);
 

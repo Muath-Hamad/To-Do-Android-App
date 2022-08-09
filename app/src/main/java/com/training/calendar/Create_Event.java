@@ -38,6 +38,7 @@ public class Create_Event extends AppCompatActivity {
     private AutoCompleteTextView autoCompleteTextView;
     private ArrayAdapter<String> adapterItems;
     private String Category;
+    private boolean hasDate;
 
 
     @Override
@@ -110,12 +111,14 @@ public class Create_Event extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean Checked) {
                 if (Checked){
+                    hasDate = true;
                     StartDate.setClickable(true);
                     StartTime.setHighlightColor(1111);
                     EndDate.setClickable(true);
                     StartTime.setClickable(true);
                     EndTime.setClickable(true);
                 }else{
+                    hasDate = false;
                     StartDate.setClickable(false);
                     EndDate.setClickable(false);
                     StartTime.setClickable(false);
@@ -214,6 +217,12 @@ public class Create_Event extends AppCompatActivity {
         user.cat = Category;
         user.date = getDate();
         user.setDone(false);
+        user.setStartDate(StartDate.getText().toString());
+        user.setEndDate(EndDate.getText().toString());
+        user.setStartTime(StartTime.getText().toString());
+        user.setEndTime(EndTime.getText().toString());
+        user.setHasDate(hasDate);
+
         db.userDao().insertAll(user);
         finish();
 
