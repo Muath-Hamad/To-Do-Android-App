@@ -38,10 +38,7 @@ public class Task_View extends AppCompatActivity {
     private void loadUserList(){
         AppDatabase db = AppDatabase.getDbInstance(this.getApplicationContext());
         List<User> userList;
-        System.out.println("???????????????????????????");
-        System.out.println(TodayDate);
 
-        System.out.println("???????????????????????????");
         if (getIntent().getBooleanExtra("EXTRA_TODAY",false)){ // if the caller is today button then today will be loaded in the list else all events will be loaded
             userList = db.userDao().getToday(TodayDate , true); // second argument will ensure that only events will be loaded
         }else{

@@ -89,9 +89,6 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.MyView
             public void onClick(View v) {
 
                 User d = userList.get(holder.getAdapterPosition());
-                System.out.println("?????????????????????????");
-                System.out.println(d.getStartDate());
-                System.out.println("?????????????????????????");
                 int sID = d.uid;
                 String sText = d.taskName;
                 String sDesc = d.description;
