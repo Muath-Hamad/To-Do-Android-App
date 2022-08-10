@@ -1,6 +1,8 @@
 package com.training.calendar;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +21,7 @@ public class categoryAdapter extends RecyclerView.Adapter<categoryAdapter.ViewHo
 private List<CategoryData> categoryDataList;
 private Activity context;
 private AppDatabase DB;
+
 
     public categoryAdapter(List<CategoryData> categoryDataList, Activity context) {
         this.categoryDataList = categoryDataList;
@@ -85,15 +88,30 @@ private AppDatabase DB;
         holder.btDelete.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View view) {
+            new AlertDialog.Builder(context)
+                    .setTitle("Delete Category")
+                    .setMessage("Deleting this category will delete each task inside it.")
 
-            CategoryData Pos = categoryDataList.get(holder.getAdapterPosition());
-            // Delete category from DB
-            DB.categoryDao().delete(Pos);
-            // Notify when data is deleted
-            int position = holder.getAdapterPosition();
-            categoryDataList.remove(position);
-            notifyItemRemoved(position);
-            notifyItemRangeChanged(position , categoryDataList.size());
+                    // Specifying a listener allows you to take an action before dismissing the dialog.
+                    // The dialog is automatically dismissed when a dialog button is clicked.
+                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            CategoryData Pos = categoryDataList.get(holder.getAdapterPosition());
+                            // Delete category from DB
+                            DB.categoryDao().delete(Pos);
+                            // Notify when data is deleted
+                            int position = holder.getAdapterPosition();
+                            categoryDataList.remove(position);
+                            notifyItemRemoved(position);
+                            notifyItemRangeChanged(position , categoryDataList.size());
+                        }
+                    })
+
+                    // A null listener allows the button to dismiss the dialog and take no further action.
+                    .setNegativeButton(android.R.string.no, null)
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .show();
+
 
         }
         });

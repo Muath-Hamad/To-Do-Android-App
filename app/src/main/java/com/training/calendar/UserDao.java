@@ -47,5 +47,4 @@ public interface UserDao {
     @Query("UPDATE task_table SET Done = :setDone WHERE uid = :sID")
     void setDone(int sID , boolean setDone);
 
-
 }
