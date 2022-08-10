@@ -7,6 +7,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -15,12 +18,17 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
 public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.MyViewHolder> {
     private Context context;
     private List<User> userList;
+    private List<CategoryData> categoryDataList = new ArrayList<>();
+    private ArrayAdapter<String> adapterItems; //for category drop-down list
+    private AutoCompleteTextView autoCompleteTextView;
+    private String Category;
     private AppDatabase DB;
     private int test;
 
@@ -94,6 +102,8 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.MyView
                 String sDesc = d.description;
                 Dialog dialog = new Dialog(context);
                 dialog.setContentView(R.layout.activity_update_task);
+                autoCompleteTextView = dialog.findViewById(R.id.auto_complete_text_Update);
+                initDropDownList();
                 int width = WindowManager.LayoutParams.MATCH_PARENT;
                 int height = WindowManager.LayoutParams.WRAP_CONTENT;
                 dialog.getWindow().setLayout(width, height);
@@ -135,6 +145,34 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.MyView
                     }
                 });
 
+
+
+            }
+        });
+
+    }
+
+    private void initDropDownList() {
+
+        // initialize DB
+        DB = AppDatabase.getDbInstance(context);
+        // store DB value in data list
+        categoryDataList = DB.categoryDao().getAllC();
+
+        String[] items = new String[categoryDataList.size()];
+        int i =0;
+        for (Object value: categoryDataList) {
+            CategoryData data = categoryDataList.get(i);
+            items[i] =  data.getTitle();
+            i++;
+        }
+        adapterItems = new ArrayAdapter<String>(context,R.layout.category_list_item,items);
+        autoCompleteTextView.setAdapter(adapterItems);
+        autoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+
+                Category = adapterView.getItemAtPosition(position).toString(); // store selection in item
 
 
             }

@@ -36,7 +36,7 @@ public class Create_Event extends AppCompatActivity {
     private List<CategoryData> categoryDataList = new ArrayList<>();
     private AppDatabase AppDB;
     private AutoCompleteTextView autoCompleteTextView;
-    private ArrayAdapter<String> adapterItems;
+    private ArrayAdapter<String> adapterItems; //for category drop-down list
     private String Category;
     private boolean hasDate;
 
