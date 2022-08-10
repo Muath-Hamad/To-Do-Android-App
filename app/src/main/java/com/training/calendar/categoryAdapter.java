@@ -97,6 +97,8 @@ private AppDatabase DB;
                     .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             CategoryData Pos = categoryDataList.get(holder.getAdapterPosition());
+                            String Cat = holder.cTitle.getText().toString();
+                            DB.userDao().deleteByCategory(Cat);
                             // Delete category from DB
                             DB.categoryDao().delete(Pos);
                             // Notify when data is deleted
