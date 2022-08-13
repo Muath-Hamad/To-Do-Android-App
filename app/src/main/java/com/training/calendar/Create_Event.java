@@ -18,6 +18,7 @@ import android.widget.TimePicker;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
+import androidx.cardview.widget.CardView;
 
 import java.sql.Date;
 import java.sql.Timestamp;
@@ -47,6 +48,7 @@ public class Create_Event extends AppCompatActivity {
     private LocalDate startD ,endD;
     private int sDay = -1 ,sMonth ,sYear, eDay = -1 ,eMonth ,eYear;
     private long sTime , eTime;
+    private CardView sCard ,eCard;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -106,11 +108,12 @@ public class Create_Event extends AppCompatActivity {
         EndDate.setText(getTodaysDate());
         dateSwitch = findViewById(R.id.DateSwitch);
         autoCompleteTextView = findViewById(R.id.auto_complete_text);
+        sCard =findViewById(R.id.StartCard);
+        eCard =findViewById(R.id.EndCard);
 //         default state
-        StartDate.setClickable(false);
-        EndDate.setClickable(false);
-        StartTime.setClickable(false);
-        EndTime.setClickable(false);
+        sCard.setVisibility(View.INVISIBLE);
+        eCard.setVisibility(View.INVISIBLE);
+
     }
     private void initSwitchListener() {
 
@@ -119,19 +122,13 @@ public class Create_Event extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton compoundButton, boolean Checked) {
                 if (Checked){
                     hasDate = true;
-                    StartDate.setClickable(true);
-                    StartTime.setHighlightColor(1111);
-                    EndDate.setClickable(true);
-                    StartTime.setClickable(true);
-                    EndTime.setClickable(true);
+                    sCard.setVisibility(View.VISIBLE);
+                    eCard.setVisibility(View.VISIBLE);
                 }else{
                     hasDate = false;
-                    StartDate.setClickable(false);
-                    EndDate.setClickable(false);
-                    StartTime.setClickable(false);
-                    EndTime.setClickable(false);
+                    sCard.setVisibility(View.INVISIBLE);
+                    eCard.setVisibility(View.INVISIBLE);
                 }
-
             }
         });
     }
