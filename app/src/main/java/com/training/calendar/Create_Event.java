@@ -3,6 +3,7 @@ package com.training.calendar;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -14,9 +15,13 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TimePicker;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
 
+import java.sql.Date;
+import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -39,7 +44,9 @@ public class Create_Event extends AppCompatActivity {
     private ArrayAdapter<String> adapterItems; //for category drop-down list
     private String Category;
     private boolean hasDate;
-
+    private LocalDate startD ,endD;
+    private int sDay = -1 ,sMonth ,sYear, eDay = -1 ,eMonth ,eYear;
+    private long sTime , eTime;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -139,15 +146,21 @@ public class Create_Event extends AppCompatActivity {
     private void initDatePicker() {
 
         DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                 month += 1;
                 date = makeDateString(day,month,year);
                 if (Caller){
                     StartDate.setText(date);
-
+                    startD = LocalDate.of(year , month-1,day);
+                    startD.toEpochDay();
+                    sDay = day; sMonth = month; sYear = year;
                 }else {
                     EndDate.setText(date);
+                    endD = LocalDate.of(year , month-1 ,day);
+                    endD.toEpochDay();
+                    eDay = day; eMonth = month; eYear = year;
                 }
             }
         };
@@ -196,9 +209,23 @@ public class Create_Event extends AppCompatActivity {
                 hour = selectedHour; minute = selectedMinute;
                 if (view.equals(StartTime)){
                     StartTime.setText(String.format(Locale.getDefault(), "%02d:%02d",hour ,minute));
+                    if (sDay == -1){
+                        // instruct user to pick date first
+                    }else{
+                        Calendar cal =Calendar.getInstance();
+                        cal.set(Calendar.YEAR ,sYear); cal.set(Calendar.MONTH ,sMonth); cal.set(Calendar.DAY_OF_MONTH ,sDay); cal.set(Calendar.HOUR_OF_DAY ,selectedHour); cal.set(Calendar.MINUTE ,selectedMinute);
+                        sTime = cal.getTime().getTime();
+                    }
                 }
                 if (view.equals(EndTime)){
                     EndTime.setText(String.format(Locale.getDefault(), "%02d:%02d",hour ,minute));
+                    if (eDay == -1){
+                        // instruct user to pick date first
+                    }else{
+                        Calendar cal =Calendar.getInstance();
+                        cal.set(Calendar.YEAR ,eYear); cal.set(Calendar.MONTH ,eMonth); cal.set(Calendar.DAY_OF_MONTH ,eDay); cal.set(Calendar.HOUR_OF_DAY ,selectedHour); cal.set(Calendar.MINUTE ,selectedMinute);
+                        eTime = cal.getTime().getTime();
+                    }
                 }
             }
         };
@@ -209,6 +236,7 @@ public class Create_Event extends AppCompatActivity {
         timePickerDialog.show();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public void SaveButton(View view) { // this method is empty at the moment the plan is to make it save data to DB and go back to main page
         AppDatabase db = AppDatabase.getDbInstance(this.getApplicationContext());
         User user = new User();
@@ -217,12 +245,21 @@ public class Create_Event extends AppCompatActivity {
         user.cat = Category;
         user.date = getDate();
         user.setDone(false);
-        user.setStartDate(StartDate.getText().toString());
-        user.setEndDate(EndDate.getText().toString());
-        user.setStartTime(StartTime.getText().toString());
-        user.setEndTime(EndTime.getText().toString());
-        user.setHasDate(hasDate);
 
+        user.setStartDate(StartDate.getText().toString()); // this  store String in DB
+        user.setEndDate(EndDate.getText().toString()); // this  store String in DB
+        user.setStartTime(StartTime.getText().toString());// this  store String in DB
+        user.setEndTime(EndTime.getText().toString());// this  store String in DB
+
+        user.setStartTime(sTime); // this will store long in DB
+        user.setEndTime(eTime); // this will store long in DB
+
+        user.setStartDate(startD.toEpochDay()); // this will store long in DB
+        user.setEndDate(endD.toEpochDay()); // this will store long in DB
+
+        user.setHasDate(hasDate);
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        user.setCreateTime(timestamp.getTime());
         db.userDao().insertAll(user);
         finish();
 

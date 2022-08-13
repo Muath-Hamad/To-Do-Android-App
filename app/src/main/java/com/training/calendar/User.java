@@ -28,6 +28,20 @@ public class User {
 
     @ColumnInfo(name = "StartTime")
     public String StartTime;
+
+    @ColumnInfo(name = "longStartTime")
+    public long startTime;
+
+    @ColumnInfo(name = "longEndTime")
+    public long endTime;
+
+    @ColumnInfo(name = "longStartDate")
+    public long startDate;
+
+    @ColumnInfo(name = "longEndDate")
+    public long endDate;
+
+
     @ColumnInfo(name = "EndTime")
     public String EndTime;
 
@@ -37,8 +51,34 @@ public class User {
     @ColumnInfo(name = "Done")
     public Boolean done;
 
+    @ColumnInfo(name = "CreationTime")
+    public long CreateTime;
+
+    public void setStartDate(long startDate) {
+        this.startDate = startDate;
+    }
+
+    public void setEndDate(long endDate) {
+        this.endDate = endDate;
+    }
+
+    public long getCreateTime() {
+        return CreateTime;
+    }
+
+    public void setCreateTime(long createTime) {
+        this.CreateTime = createTime;
+    }
+
     public String getStartDate() {
         return StartDate;
+    }
+    public void setStartTime(long startTime) {
+        this.startTime = startTime;
+    }
+
+    public void setEndTime(long endTime) {
+        this.endTime = endTime;
     }
 
     public void setStartDate(String startDate) {
