@@ -251,8 +251,14 @@ public class Create_Event extends AppCompatActivity {
         user.setStartTime(sTime); // this will store long in DB
         user.setEndTime(eTime); // this will store long in DB
 
-        user.setStartDate(startD.toEpochDay()); // this will store long in DB
-        user.setEndDate(endD.toEpochDay()); // this will store long in DB
+        if(hasDate){
+            user.setStartDate(startD.toEpochDay()); // this will store long in DB
+            user.setEndDate(endD.toEpochDay()); // this will store long in DB
+        }else{
+            user.setStartDate(-1); // this will store long in DB
+            user.setEndDate(-1); // this will store long in DB
+        }
+
 
         user.setHasDate(hasDate);
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
