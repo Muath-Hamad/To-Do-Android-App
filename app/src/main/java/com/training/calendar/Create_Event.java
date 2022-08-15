@@ -45,7 +45,8 @@ public class Create_Event extends AppCompatActivity {
     private ArrayAdapter<String> adapterItems; //for category drop-down list
     private String Category;
     private boolean hasDate;
-    private LocalDate startD ,endD;
+    private long startD;
+    private long endD;
     private int sDay = -1 ,sMonth ,sYear, eDay = -1 ,eMonth ,eYear;
     private long sTime , eTime;
     private CardView sCard ,eCard;
@@ -146,17 +147,26 @@ public class Create_Event extends AppCompatActivity {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                month += 1;
-                date = makeDateString(day,month,year);
+                Calendar cal = Calendar.getInstance();
+                date = makeDateString(day,month+1,year);
                 if (Caller){
                     StartDate.setText(date);
-                    startD = LocalDate.of(year , month-1,day);
-                    startD.toEpochDay();
+                    //startD = LocalDate.of(year , month,day);
+
+                    cal.set(Calendar.YEAR , year); // this will help us set default value to Today's Date
+                    cal.set(Calendar.MONTH , month);
+                    cal.set(Calendar.DAY_OF_MONTH , day);;
+                    startD = cal.getTime().getTime();
+
                     sDay = day; sMonth = month; sYear = year;
                 }else {
                     EndDate.setText(date);
-                    endD = LocalDate.of(year , month-1 ,day);
-                    endD.toEpochDay();
+                   // endD = LocalDate.of(year , month ,day);
+
+                    cal.set(Calendar.YEAR , year); // this will help us set default value to Today's Date
+                    cal.set(Calendar.MONTH , month);
+                    cal.set(Calendar.DAY_OF_MONTH , day);
+                    endD = cal.getTime().getTime();
                     eDay = day; eMonth = month; eYear = year;
                 }
             }
@@ -248,15 +258,18 @@ public class Create_Event extends AppCompatActivity {
         user.setStartTime(StartTime.getText().toString());// this  store String in DB
         user.setEndTime(EndTime.getText().toString());// this  store String in DB
 
-        user.setStartTime(sTime); // this will store long in DB
-        user.setEndTime(eTime); // this will store long in DB
-
         if(hasDate){
-            user.setStartDate(startD.toEpochDay()); // this will store long in DB
-            user.setEndDate(endD.toEpochDay()); // this will store long in DB
+            user.setStartDate(startD-1); // this will store long in DB
+            user.setEndDate(endD+2); // this will store long in DB
+
+            user.setStartTime(sTime); // this will store long in DB ,, this will point to the exact minute the event start
+            user.setEndTime(eTime); // this will store long in DB ,, this will point to the exact minute the event end
         }else{
             user.setStartDate(-1); // this will store long in DB
             user.setEndDate(-1); // this will store long in DB
+
+            user.setStartTime(sTime); // this will store long in DB
+            user.setEndTime(eTime); // this will store long in DB
         }
 
 

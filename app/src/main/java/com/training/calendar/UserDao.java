@@ -22,6 +22,12 @@ public interface UserDao {
     @Query("SELECT * FROM task_table WHERE StartDate = :date AND hasDate = :today")
     List<User> getToday(String date ,boolean today);
 
+    @Query("SELECT * FROM task_table WHERE hasDate = :today AND :time BETWEEN longStartDate AND longEndDate ")
+    List<User> getTodayLong(long time ,boolean today); // this will get all events that are due today
+
+    @Query("SELECT * FROM task_table WHERE hasDate = :hasDate")
+    List<User> getTasks(boolean hasDate); // this will be used to get all tasks that has no date
+
     @Query("SELECT * FROM task_table WHERE uid IN (:userIds)")
     List<User> loadAllByIds(int[] userIds);
 

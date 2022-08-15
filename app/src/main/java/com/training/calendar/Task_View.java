@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Calendar;
 
@@ -16,7 +17,7 @@ public class Task_View extends AppCompatActivity {
     private ImageView update;
     private ListView noteListView;
     private UserListAdapter userListAdapter;
-    private String TodayDate;
+    private long TodayDate;
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task_view);
@@ -44,7 +45,13 @@ public class Task_View extends AppCompatActivity {
             userList = db.userDao().getByCategory(catname);
 
         }else if (getIntent().getBooleanExtra("EXTRA_TODAY",false)){ // if the caller is today button then today will be loaded in the list else all events will be loaded
-            userList = db.userDao().getToday(TodayDate , true); // second argument will ensure that only events will be loaded
+            Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+            List<User> eventsList = db.userDao().getTodayLong(timestamp.getTime(),true);
+            List<User>TasksList = db.userDao().getTasks(false);
+            userList = TasksList;
+            userList.addAll(eventsList);
+
+           // userList = db.userDao().getToday(TodayDate , true); // second argument will ensure that only events will be loaded
         }else{
             userList =db.userDao().getAll();
         }
@@ -58,7 +65,8 @@ public class Task_View extends AppCompatActivity {
         int month = cal.get(Calendar.MONTH);
         month+=1;
         int day = cal.get(Calendar.DAY_OF_MONTH);
-        TodayDate= makeDateString(day ,month,year);
+        TodayDate = cal.getTime().getTime();
+        //TodayDate= makeDateString(day ,month,year);
     }
 
     private String getMonthFormat(int month) { // this method is to get the "String" value instead of Digital
