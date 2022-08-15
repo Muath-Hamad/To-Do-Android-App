@@ -155,8 +155,11 @@ public class Create_Event extends AppCompatActivity {
 
                     cal.set(Calendar.YEAR , year); // this will help us set default value to Today's Date
                     cal.set(Calendar.MONTH , month);
-                    cal.set(Calendar.DAY_OF_MONTH , day);;
-                    startD = cal.getTime().getTime();
+                    cal.set(Calendar.DAY_OF_MONTH , day);
+                    cal.set(Calendar.HOUR_OF_DAY ,0);
+                    cal.set(Calendar.MINUTE , 0);
+                    cal.set(Calendar.SECOND , 0);
+                    startD = cal.getTimeInMillis();
 
                     sDay = day; sMonth = month; sYear = year;
                 }else {
@@ -166,7 +169,10 @@ public class Create_Event extends AppCompatActivity {
                     cal.set(Calendar.YEAR , year); // this will help us set default value to Today's Date
                     cal.set(Calendar.MONTH , month);
                     cal.set(Calendar.DAY_OF_MONTH , day);
-                    endD = cal.getTime().getTime();
+                    cal.set(Calendar.HOUR_OF_DAY ,23);
+                    cal.set(Calendar.MINUTE , 59);
+                    cal.set(Calendar.SECOND , 59);
+                    endD = cal.getTimeInMillis();
                     eDay = day; eMonth = month; eYear = year;
                 }
             }
@@ -261,7 +267,8 @@ public class Create_Event extends AppCompatActivity {
         if(hasDate){
             user.setStartDate(startD-1); // this will store long in DB
             user.setEndDate(endD+2); // this will store long in DB
-
+            System.out.println("startD in Create Event"+ (startD+1));
+            System.out.println("endD in Create Event"+ (endD-2));
             user.setStartTime(sTime); // this will store long in DB ,, this will point to the exact minute the event start
             user.setEndTime(eTime); // this will store long in DB ,, this will point to the exact minute the event end
         }else{

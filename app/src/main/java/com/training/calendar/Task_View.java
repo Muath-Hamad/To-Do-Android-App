@@ -23,7 +23,6 @@ public class Task_View extends AppCompatActivity {
         setContentView(R.layout.activity_task_view);
         initRecyclerView();
         loadUserList();
-
     }
     private void initRecyclerView(){
         RecyclerView recyclerView = findViewById(R.id.RecyclerView);
@@ -33,7 +32,6 @@ public class Task_View extends AppCompatActivity {
         userListAdapter = new UserListAdapter(this);
         recyclerView.setAdapter(userListAdapter);
     }
-
     private void loadUserList(){
         AppDatabase db = AppDatabase.getDbInstance(this.getApplicationContext());
         List<User> userList;
@@ -43,8 +41,8 @@ public class Task_View extends AppCompatActivity {
             userList = db.userDao().getByCategory(catname);
 
         }else if (getIntent().getBooleanExtra("EXTRA_TODAY",false)){ // if the caller is today button then today will be loaded in the list else all events will be loaded
-            Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-            List<User> eventsList = db.userDao().getTodayLong(timestamp.getTime(),true);
+
+            List<User> eventsList = db.userDao().getTodayLong(getTodayLong(),true);
             List<User>TasksList = db.userDao().getTasks(false);
             userList = TasksList;
             userList.addAll(eventsList);
@@ -52,10 +50,11 @@ public class Task_View extends AppCompatActivity {
         }else{
             userList =db.userDao().getAll();
         }
-
-
         userListAdapter.setUserList(userList);
     }
-
-
+    private long getTodayLong() {
+        Calendar cal = Calendar.getInstance();
+        System.out.println("cal.getTimeInMillis() in Task View"+ cal.getTimeInMillis());
+        return cal.getTimeInMillis();
+    }
 }
