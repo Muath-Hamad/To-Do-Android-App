@@ -7,9 +7,9 @@
 
     <ImageView
         android:id="@+id/Home_Office"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="26dp"
+        android:layout_width="36dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="3dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/Home_Address"
         app:layout_constraintTop_toTopOf="@+id/Home_Address"
@@ -17,18 +17,19 @@
 
     <ImageView
         android:id="@+id/Briefcase"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="36dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="3dp"
         app:layout_constraintEnd_toStartOf="@+id/Dumbbell"
-
         app:layout_constraintStart_toEndOf="@+id/pc_on_desk"
         app:layout_constraintTop_toBottomOf="@+id/Work"
         app:srcCompat="@drawable/ic_briefcase" />
 
     <ImageView
         android:id="@+id/pc_on_desk"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="36dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="3dp"
         app:layout_constraintEnd_toStartOf="@+id/Briefcase"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
@@ -37,9 +38,9 @@
 
     <ImageView
         android:id="@+id/People"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="26dp"
+        android:layout_width="36dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="3dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/Dumbbell"
         app:layout_constraintTop_toBottomOf="@+id/Home_Office"
@@ -47,8 +48,9 @@
 
     <ImageView
         android:id="@+id/Work"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="36dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="3dp"
         app:layout_constraintEnd_toStartOf="@+id/Home"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
@@ -57,8 +59,8 @@
 
     <ImageView
         android:id="@+id/Dumbbell"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="36dp"
+        android:layout_height="40dp"
         android:layout_marginEnd="3dp"
         app:layout_constraintEnd_toStartOf="@+id/People"
         app:layout_constraintStart_toEndOf="@+id/Briefcase"
@@ -67,8 +69,8 @@
 
     <ImageView
         android:id="@+id/Home_Address"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="36dp"
+        android:layout_height="40dp"
         android:layout_marginEnd="3dp"
         app:layout_constraintEnd_toStartOf="@+id/Home_Office"
         app:layout_constraintStart_toEndOf="@+id/Home"
@@ -77,8 +79,9 @@
 
     <ImageView
         android:id="@+id/Home"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="36dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="3dp"
         app:layout_constraintEnd_toStartOf="@+id/Home_Address"
         app:layout_constraintStart_toEndOf="@+id/Work"
         app:layout_constraintTop_toTopOf="@+id/Work"

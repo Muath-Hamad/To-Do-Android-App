@@ -49,7 +49,8 @@ private AppDatabase DB;
         DB = AppDatabase.getDbInstance(context);
         // set text
         holder.cTitle.setText(data.getTitle());
-        holder.colorDis.setColorFilter(data.getColor());
+
+        holder.colorDis.setColorFilter(R.color.blue);
         holder.catBTN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

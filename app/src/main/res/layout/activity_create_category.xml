@@ -39,53 +39,59 @@
         android:id="@+id/iconBTN"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
         android:layout_marginTop="24dp"
+        android:layout_marginBottom="44dp"
         android:text="Icons"
         app:layout_constraintBottom_toTopOf="@+id/colorsBTN"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.891"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/TitleEdit"
-        app:layout_constraintVertical_bias="0.019" />
+        app:layout_constraintStart_toEndOf="@+id/catgIconChosen"
+        app:layout_constraintTop_toBottomOf="@+id/TitleEdit" />
 
     <Button
         android:id="@+id/colorsBTN"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="276dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="284dp"
         android:text="Colors"
         app:layout_constraintBottom_toTopOf="@+id/SaveCategoryBTN"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.902"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toEndOf="@+id/catgColorChosen"
+        app:layout_constraintTop_toBottomOf="@+id/iconBTN" />
 
     <ImageView
         android:id="@+id/catgColorChosen"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="244dp"
-        android:layout_marginTop="68dp"
+        android:layout_marginStart="230dp"
+        android:layout_marginTop="55dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="400dp"
         android:src="@drawable/ic_catgcolor"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/colorsBTN"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/catgIconChosen"
+        app:layout_constraintVertical_bias="0.0"
         app:tint="@color/white" />
 
     <ImageView
         android:id="@+id/catgIconChosen"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="244dp"
+        android:layout_width="22dp"
+        android:layout_height="25dp"
+        android:layout_marginStart="230dp"
         android:layout_marginTop="32dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="32dp"
         android:src="@drawable/ic_catgcolor"
+        app:layout_constraintBottom_toTopOf="@+id/catgColorChosen"
         app:layout_constraintEnd_toStartOf="@+id/iconBTN"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/TitleEdit"
-        app:tint="@color/white"></ImageView>
+        app:layout_constraintTop_toBottomOf="@+id/TitleEdit"></ImageView>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

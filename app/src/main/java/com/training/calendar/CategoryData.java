@@ -19,6 +19,7 @@ public class CategoryData implements Serializable {
     private int color;
 
 
+
     public int getID() {
         return ID;
     }
