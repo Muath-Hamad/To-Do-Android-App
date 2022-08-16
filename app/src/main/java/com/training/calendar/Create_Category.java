@@ -1,20 +1,23 @@
 package com.training.calendar;
 
+import static com.training.calendar.R.id.catgColorBlue;
+
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
-import yuku.ambilwarna.AmbilWarnaDialog;
-
 public class Create_Category extends AppCompatActivity {
 
-    Button ColorPicker , saveButton;
+    Button ColorPicker , saveButton , IconPicker;
     TextView preview; // this will help show the user what color is currently chosen
     EditText categoryTitle; // this will have the name of category
     int ChosenColor;
@@ -32,6 +35,8 @@ public class Create_Category extends AppCompatActivity {
         initViews();
         initDB();
         loadAndExcute();
+
+
 
 
     }
@@ -78,7 +83,8 @@ public class Create_Category extends AppCompatActivity {
         data = new CategoryData();
     }
     private void initViews() {
-        ColorPicker = findViewById(R.id.CategoryColorPicker);
+        ColorPicker = findViewById(R.id.colorsBTN);
+        IconPicker = findViewById(R.id.iconBTN);
         preview = findViewById(R.id.ColorPreview);
         categoryTitle = findViewById(R.id.TitleEdit);
         saveButton = findViewById(R.id.SaveCategoryBTN);
@@ -86,34 +92,49 @@ public class Create_Category extends AppCompatActivity {
         ColorPicker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openColorPicker();
+                Dialog dialog = new Dialog(Create_Category.this);
+                dialog.setContentView(R.layout.category_colors);
+                int width = WindowManager.LayoutParams.WRAP_CONTENT;
+                int height = WindowManager.LayoutParams.WRAP_CONTENT;
+                dialog.getWindow().setLayout(width, height);
+                dialog.show();
+                ImageView dumbbell = findViewById(R.id.Dumbbell);
+                ImageView home = findViewById(R.id.Home);
+                ImageView homeAddress = findViewById(R.id.Home_Address);
+                ImageView homeOffice = findViewById(R.id.Home_Office);
+                ImageView work = findViewById(R.id.Work);
+                ImageView pcOnDesk = findViewById(R.id.pc_on_desk);
+                ImageView briefcase = findViewById(R.id.Briefcase);
+                ImageView people = findViewById(R.id.People);
+
 
             }
         });
-        categoryTitle.setOnClickListener(new View.OnClickListener() { // clear field on first use
+        IconPicker.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                if (getString(R.string.eventTitleText).equals(categoryTitle.getText().toString())){
-                    categoryTitle.setText("");
-                }
+            public void onClick(View v) {
+                Dialog dialog = new Dialog(Create_Category.this);
+                dialog.setContentView(R.layout.category_icons);
+                int width = WindowManager.LayoutParams.WRAP_CONTENT;
+                int height = WindowManager.LayoutParams.WRAP_CONTENT;
+                dialog.getWindow().setLayout(width, height);
+                dialog.show();
+                ImageView blue = findViewById(catgColorBlue);
+                ImageView black = findViewById(R.id.catgColorBlack);
+                ImageView gray = findViewById(R.id.catgColorGray);
+                ImageView green = findViewById(R.id.catgColorGreen);
+                ImageView red = findViewById(R.id.catgColorRed);
+                ImageView purple = findViewById(R.id.catgColorPurple);
+                ImageView teal = findViewById(R.id.catgColorTeal);
+                ImageView maroon = findViewById(R.id.catgColorMaroon);
+
+
+
             }
         });
     }
 
-    private void openColorPicker() {
-        AmbilWarnaDialog ambilWarnaDialog =new AmbilWarnaDialog(this, ChosenColor, new AmbilWarnaDialog.OnAmbilWarnaListener() {
-            @Override
-            public void onCancel(AmbilWarnaDialog dialog) {}
 
-            @Override
-            public void onOk(AmbilWarnaDialog dialog, int color) {
-
-                ChosenColor = color; // this will save the color chosen on the dialog
-                preview.setBackgroundColor(color); // set the preview to chosen color
-            }
-        });
-        ambilWarnaDialog.show();
-    }
 
     public void SaveNewButton() { // write data into DB and then return to main activity
 
