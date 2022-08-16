@@ -48,7 +48,7 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.MyView
     private boolean hasDate;
     private CardView sCard ,eCard;
     private  Button btDateStart , btDateEnd , btTimeStart , btTimeEnd;
-    private boolean Caller;
+    private boolean Caller , UpdateTime = false;
     private DatePickerDialog datePickerDialog;
     private int sDay = -1 ,sMonth ,sYear, eDay = -1 ,eMonth ,eYear , hour , minute;
     private long newUpdatedstartD , newUpdatedEndD , newUpdatedStartTime , newUpdatedEndTime;
@@ -138,6 +138,7 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.MyView
                 int sID = d.uid;
                 String sText = d.taskName;
                 String sDesc = d.description;
+                hasDate = d.hasDate;
 
 
                 Dialog dialog = new Dialog(context);
@@ -152,6 +153,7 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.MyView
                 EditText descUp = dialog.findViewById(R.id.descUpdate);
                 Button btUpdate = dialog.findViewById(R.id.updateBTN);
                 dateSwitch = dialog.findViewById(R.id.DateSwitchUpdate);
+                dateSwitch.setChecked(d.hasDate);
                 initSwitchListener();
                 sCard =dialog.findViewById(R.id.StartCardUpdate);
                 eCard =dialog.findViewById(R.id.EndCardUpdate);
@@ -203,7 +205,8 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.MyView
                         String uDesc = descUp.getText().toString();
                         d.taskName = uText;
                         d.description = uDesc;
-                        if (hasDate){
+                        d.setHasDate(hasDate);
+                        if (hasDate && UpdateTime){
                             d.setStartDate(newUpdatedstartD);
                             d.setEndDate(newUpdatedEndD);
                             d.setStartTime(newUpdatedStartTime);
@@ -411,7 +414,7 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.MyView
 
                         Calendar cal =Calendar.getInstance();
                         cal.set(Calendar.YEAR ,sYear); cal.set(Calendar.MONTH ,sMonth); cal.set(Calendar.DAY_OF_MONTH ,sDay); cal.set(Calendar.HOUR_OF_DAY ,selectedHour); cal.set(Calendar.MINUTE ,selectedMinute);
-                        newUpdatedStartTime = cal.getTime().getTime();
+                        newUpdatedStartTime = cal.getTimeInMillis();
 
                 }
                 if (view.equals(btTimeEnd)){
@@ -419,7 +422,7 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.MyView
 
                         Calendar cal =Calendar.getInstance();
                         cal.set(Calendar.YEAR ,eYear); cal.set(Calendar.MONTH ,eMonth); cal.set(Calendar.DAY_OF_MONTH ,eDay); cal.set(Calendar.HOUR_OF_DAY ,selectedHour); cal.set(Calendar.MINUTE ,selectedMinute);
-                        newUpdatedEndTime = cal.getTime().getTime();
+                        newUpdatedEndTime = cal.getTimeInMillis();
                 }
             }
         };
