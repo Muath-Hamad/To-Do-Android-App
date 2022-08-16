@@ -21,6 +21,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -164,8 +165,8 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.MyView
                 initDatePicker();
                  btDateStart = dialog.findViewById(R.id.StartDateUpdate);
                  btDateEnd = dialog.findViewById(R.id.EndDateUpdate);
-                 btTimeStart = dialog.findViewById(R.id.EndTimeUpdate);
-                 btTimeEnd = dialog.findViewById(R.id.StartTimeUpdate);
+                 btTimeStart = dialog.findViewById(R.id.StartTimeUpdate);
+                 btTimeEnd = dialog.findViewById(R.id.EndTimeUpdate);
                 preloadDateAndTime(d.startTime,d.endTime);
                 ImageView deleteBTN = dialog.findViewById(R.id.taskDeleteBTN);
                 titleUpd.setText(sText);
@@ -252,7 +253,7 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.MyView
         int startMinute = cal.get(Calendar.MINUTE);
 
         Calendar cal1 =Calendar.getInstance();
-        cal.setTimeInMillis(endTime);
+        cal1.setTimeInMillis(endTime);
         int endYear = cal1.get(Calendar.YEAR);
         int endMonth = cal1.get(Calendar.MONTH);
         int endDay = cal1.get(Calendar.DAY_OF_MONTH);
@@ -397,29 +398,28 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.MyView
         return "JAN";
     }
     public void popTimePicker1(View view){
+        if (sDay == -1){
+            Toast toast = Toast.makeText(context ,"Please Enter a Date first",Toast.LENGTH_SHORT);
+            toast.show();
+        }else{
         TimePickerDialog.OnTimeSetListener onTimeSetListener = new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
                  hour = selectedHour;  minute = selectedMinute;
                 if (view.equals(btTimeStart)){
                     btTimeStart.setText(String.format(Locale.getDefault(), "%02d:%02d",hour ,minute));
-                    if (sDay == -1){
-                        // instruct user to pick date first
-                    }else{
+
                         Calendar cal =Calendar.getInstance();
                         cal.set(Calendar.YEAR ,sYear); cal.set(Calendar.MONTH ,sMonth); cal.set(Calendar.DAY_OF_MONTH ,sDay); cal.set(Calendar.HOUR_OF_DAY ,selectedHour); cal.set(Calendar.MINUTE ,selectedMinute);
                         newUpdatedStartTime = cal.getTime().getTime();
-                    }
+
                 }
                 if (view.equals(btTimeEnd)){
                     btTimeEnd.setText(String.format(Locale.getDefault(), "%02d:%02d",hour ,minute));
-                    if (eDay == -1){
-                        // instruct user to pick date first
-                    }else{
+
                         Calendar cal =Calendar.getInstance();
                         cal.set(Calendar.YEAR ,eYear); cal.set(Calendar.MONTH ,eMonth); cal.set(Calendar.DAY_OF_MONTH ,eDay); cal.set(Calendar.HOUR_OF_DAY ,selectedHour); cal.set(Calendar.MINUTE ,selectedMinute);
                         newUpdatedEndTime = cal.getTime().getTime();
-                    }
                 }
             }
         };
@@ -427,6 +427,6 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.MyView
 
         TimePickerDialog timePickerDialog = new TimePickerDialog(context , onTimeSetListener , hour ,minute , true);
         timePickerDialog.setTitle("Select Time");
-        timePickerDialog.show();
+        timePickerDialog.show();}
     }
 }

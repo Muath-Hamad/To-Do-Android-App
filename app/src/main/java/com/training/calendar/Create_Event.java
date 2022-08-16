@@ -14,6 +14,7 @@ import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -216,29 +217,29 @@ public class Create_Event extends AppCompatActivity {
 
     }
     public void popTimePicker(View view){
+        if (sDay==-1){
+            // instruct user to pick date first
+            Toast toast = Toast.makeText(getApplicationContext() ,"Please Enter a Date first",Toast.LENGTH_SHORT);
+            toast.show();
+        }else{
         TimePickerDialog.OnTimeSetListener onTimeSetListener = new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
                 hour = selectedHour; minute = selectedMinute;
                 if (view.equals(StartTime)){
                     StartTime.setText(String.format(Locale.getDefault(), "%02d:%02d",hour ,minute));
-                    if (sDay == -1){
-                        // instruct user to pick date first
-                    }else{
+
                         Calendar cal =Calendar.getInstance();
                         cal.set(Calendar.YEAR ,sYear); cal.set(Calendar.MONTH ,sMonth); cal.set(Calendar.DAY_OF_MONTH ,sDay); cal.set(Calendar.HOUR_OF_DAY ,selectedHour); cal.set(Calendar.MINUTE ,selectedMinute);
-                        sTime = cal.getTime().getTime();
-                    }
+                        sTime = cal.getTimeInMillis();
                 }
                 if (view.equals(EndTime)){
                     EndTime.setText(String.format(Locale.getDefault(), "%02d:%02d",hour ,minute));
-                    if (eDay == -1){
-                        // instruct user to pick date first
-                    }else{
+
                         Calendar cal =Calendar.getInstance();
                         cal.set(Calendar.YEAR ,eYear); cal.set(Calendar.MONTH ,eMonth); cal.set(Calendar.DAY_OF_MONTH ,eDay); cal.set(Calendar.HOUR_OF_DAY ,selectedHour); cal.set(Calendar.MINUTE ,selectedMinute);
-                        eTime = cal.getTime().getTime();
-                    }
+                        eTime = cal.getTimeInMillis();
+
                 }
             }
         };
@@ -246,7 +247,7 @@ public class Create_Event extends AppCompatActivity {
 
         TimePickerDialog timePickerDialog = new TimePickerDialog(this , onTimeSetListener , hour ,minute , true);
         timePickerDialog.setTitle("Select Time");
-        timePickerDialog.show();
+        timePickerDialog.show();}
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
