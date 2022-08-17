@@ -26,12 +26,25 @@
                 android:layout_weight="1"
                 android:id="@+id/categoryRowTitle"
                 android:textSize="18sp"></TextView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
             <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/catgColorDisplay"
-            android:layout_marginStart="8dp"
-            android:src="@drawable/ic_catgcolor"></ImageView>
+                android:id="@+id/catgColorDisplay"
+                android:layout_width="22dp"
+                android:layout_height="25dp"
+                android:layout_marginStart="8dp"
+                android:src="@drawable/ic_catgcolor"></ImageView>
+            <ImageView
+                android:id="@+id/catgIconDisplay"
+                android:layout_width="22dp"
+                android:layout_height="25dp"
+                android:layout_marginStart="8dp"
+                android:src="@drawable/ic_catgcolor"
+                ></ImageView>
+            </LinearLayout>
         </LinearLayout>
 
 
@@ -42,17 +55,18 @@
            android:orientation="vertical"
            android:padding="16dp"
            >
+
            <ImageView
-               android:layout_width="match_parent"
-               android:layout_height="wrap_content"
                android:id="@+id/catgEditBTN"
+               android:layout_width="22dp"
+               android:layout_height="25dp"
                android:layout_marginStart="16dp"
                android:src="@drawable/ic_edit"></ImageView>
 
            <ImageView
-               android:layout_width="match_parent"
-               android:layout_height="wrap_content"
                android:id="@+id/catgDeleteBTN"
+               android:layout_width="22dp"
+               android:layout_height="25dp"
                android:layout_marginStart="16dp"
                android:src="@drawable/ic_delete"></ImageView>
        </LinearLayout>

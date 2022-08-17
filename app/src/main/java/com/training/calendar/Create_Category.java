@@ -21,6 +21,8 @@ public class Create_Category extends AppCompatActivity {
     AppDatabase db;
     CategoryData data ;
     ImageView iconChosen , colorChosen;
+    String icon= null;
+    String color= null;
     int IDtoUpdate;
     String oldCat;
     String sText;
@@ -43,7 +45,7 @@ public class Create_Category extends AppCompatActivity {
 
         if (getIntent().getBooleanExtra("EXTRA_CATEGORY_UPDATE",false)){
 
-            preview.setBackgroundColor(getIntent().getIntExtra("EXTRA_CATEGORY_COLOR", ChosenColor));
+            //preview.setBackgroundColor(getIntent().getIntExtra("EXTRA_CATEGORY_COLOR", ChosenColor));
             categoryTitle.setText(getIntent().getStringExtra("EXTRA_CATEGORY_TITLE"));
             IDtoUpdate = getIntent().getIntExtra("EXTRA_CATEGORY_ID",-1); // This default value should never be used ,if used produce error
 
@@ -119,6 +121,8 @@ public class Create_Category extends AppCompatActivity {
 
                     data.setTitle(sText);
                     data.setColor(ChosenColor);
+                    data.setNewColor(color);
+                    data.setIcon(icon);
                     db.categoryDao().insert(data);
                 }
                 Intent i2 = new Intent(Create_Category.this ,MainActivity.class);
@@ -137,16 +141,17 @@ public class Create_Category extends AppCompatActivity {
         dialog.show();
         ImageView blue = dialog.findViewById(R.id.catgColorBlue);
         ImageView black = dialog.findViewById(R.id.catgColorBlack);
-                ImageView gray = dialog.findViewById(R.id.catgColorGray);
-                ImageView green = dialog.findViewById(R.id.catgColorGreen);
-                ImageView red = dialog.findViewById(R.id.catgColorRed);
-                ImageView purple = dialog.findViewById(R.id.catgColorPurple);
-                ImageView teal = dialog.findViewById(R.id.catgColorTeal);
-                ImageView maroon = dialog.findViewById(R.id.catgColorMaroon);
+        ImageView gray = dialog.findViewById(R.id.catgColorGray);
+        ImageView green = dialog.findViewById(R.id.catgColorGreen);
+        ImageView red = dialog.findViewById(R.id.catgColorRed);
+        ImageView purple = dialog.findViewById(R.id.catgColorPurple);
+        ImageView teal = dialog.findViewById(R.id.catgColorTeal);
+        ImageView maroon = dialog.findViewById(R.id.catgColorMaroon);
         blue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 colorChosen.setColorFilter(getResources().getColor(R.color.blue));
+                color = "blue";
                 dialog.dismiss();
             }
         });
@@ -154,6 +159,7 @@ public class Create_Category extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 colorChosen.setColorFilter(getResources().getColor(R.color.black));
+                color = "black";
                 dialog.dismiss();
             }
         });
@@ -161,13 +167,15 @@ public class Create_Category extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 colorChosen.setColorFilter(getResources().getColor(R.color.gray));
+                color = "gray";
                 dialog.dismiss();
             }
         });
         green.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                colorChosen.setColorFilter(getResources().getColor(R.color.green));
+                colorChosen.setColorFilter(getColor(R.color.green));
+                color = "green";
                 dialog.dismiss();
             }
         });
@@ -175,6 +183,7 @@ public class Create_Category extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 colorChosen.setColorFilter(getResources().getColor(R.color.red));
+                color = "red";
                 dialog.dismiss();
             }
         });
@@ -182,6 +191,7 @@ public class Create_Category extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 colorChosen.setColorFilter(getResources().getColor(R.color.purple_500));
+                color = "purple";
                 dialog.dismiss();
             }
         });
@@ -189,6 +199,7 @@ public class Create_Category extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 colorChosen.setColorFilter(getResources().getColor(R.color.teal_200));
+                color = "teal";
                 dialog.dismiss();
             }
         });
@@ -196,6 +207,7 @@ public class Create_Category extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 colorChosen.setColorFilter(getResources().getColor(R.color.maroon));
+                color = "maroon";
                 dialog.dismiss();
             }
         });
@@ -221,7 +233,7 @@ public class Create_Category extends AppCompatActivity {
             public void onClick(View v) {
                 iconChosen.setColorFilter(null);
                 iconChosen.setImageResource(R.drawable.ic_dumbbell);
-
+                icon = "dumbbell";
                 dialog.dismiss();
             }
         });
@@ -230,7 +242,7 @@ public class Create_Category extends AppCompatActivity {
             public void onClick(View v) {
                 iconChosen.setColorFilter(null);
                 iconChosen.setImageResource(R.drawable.ic_home);
-
+                icon = "home";
                 dialog.dismiss();
             }
         });
@@ -239,7 +251,7 @@ public class Create_Category extends AppCompatActivity {
             public void onClick(View v) {
                 iconChosen.setColorFilter(null);
                 iconChosen.setImageResource(R.drawable.ic_home_address);
-
+                icon = "homeAddress";
                 dialog.dismiss();
             }
         });
@@ -248,7 +260,7 @@ public class Create_Category extends AppCompatActivity {
             public void onClick(View v) {
                 iconChosen.setColorFilter(null);
                 iconChosen.setImageResource(R.drawable.ic_home_office);
-
+                icon = "homeOffice";
                 dialog.dismiss();
             }
         });
@@ -257,7 +269,7 @@ public class Create_Category extends AppCompatActivity {
             public void onClick(View v) {
                 iconChosen.setColorFilter(null);
                 iconChosen.setImageResource(R.drawable.ic_work);
-
+                icon = "work";
                 dialog.dismiss();
             }
         });
@@ -266,7 +278,7 @@ public class Create_Category extends AppCompatActivity {
             public void onClick(View v) {
                 iconChosen.setColorFilter(null);
                 iconChosen.setImageResource(R.drawable.ic_pc_on_desk);
-
+                icon = "pcOnDesk";
                 dialog.dismiss();
             }
         });
@@ -275,7 +287,7 @@ public class Create_Category extends AppCompatActivity {
             public void onClick(View v) {
                 iconChosen.setColorFilter(null);
                 iconChosen.setImageResource(R.drawable.ic_briefcase);
-
+                icon = "briefcase";
                 dialog.dismiss();
             }
         });
@@ -284,7 +296,7 @@ public class Create_Category extends AppCompatActivity {
             public void onClick(View v) {
                 iconChosen.setColorFilter(null);
                 iconChosen.setImageResource(R.drawable.ic_people);
-
+                icon = "people";
                 dialog.dismiss();
             }
         });

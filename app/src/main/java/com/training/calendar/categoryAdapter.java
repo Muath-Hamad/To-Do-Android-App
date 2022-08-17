@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
@@ -49,8 +50,12 @@ private AppDatabase DB;
         DB = AppDatabase.getDbInstance(context);
         // set text
         holder.cTitle.setText(data.getTitle());
+        //holder.iconDis.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_people));
+        displayColor(data, holder);
+        displayIcon(data,holder);
 
-        holder.colorDis.setColorFilter(R.color.blue);
+
+
         holder.catBTN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -128,8 +133,9 @@ private AppDatabase DB;
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView cTitle;
-        ImageView btEdit , btDelete , colorDis;
+        ImageView btEdit , btDelete , iconDis, colorDis;
         LinearLayout catBTN;
+
 
 
         public ViewHolder(@NonNull View itemView) {
@@ -139,8 +145,48 @@ private AppDatabase DB;
             btDelete = itemView.findViewById(R.id.catgDeleteBTN);
             colorDis = itemView.findViewById(R.id.catgColorDisplay);
             catBTN = itemView.findViewById(R.id.CatBTN);
+            iconDis = itemView.findViewById(R.id.catgIconDisplay);
 
 
         }
+    }
+    public void displayColor(CategoryData data,ViewHolder holder){
+        String color = data.getNewColor();
+        if(color.equalsIgnoreCase("blue"))
+            holder.colorDis.setColorFilter(context.getColor(R.color.blue));
+        else if(color.equalsIgnoreCase("black"))
+            holder.colorDis.setColorFilter(context.getColor(R.color.black));
+        else if(color.equalsIgnoreCase("red"))
+            holder.colorDis.setColorFilter(context.getColor(R.color.red));
+        else if(color.equalsIgnoreCase("teal"))
+            holder.colorDis.setColorFilter(context.getColor(R.color.teal_200));
+        else if(color.equalsIgnoreCase("purple"))
+            holder.colorDis.setColorFilter(context.getColor(R.color.purple_500));
+        else if(color.equalsIgnoreCase("gray"))
+            holder.colorDis.setColorFilter(context.getColor(R.color.gray));
+        else if(color.equalsIgnoreCase("green"))
+            holder.colorDis.setColorFilter(context.getColor(R.color.green));
+        else if(color.equalsIgnoreCase("maroon"))
+            holder.colorDis.setColorFilter(context.getColor(R.color.maroon));
+    }
+    public void displayIcon(CategoryData data , ViewHolder holder){
+        String icon = data.getIcon();
+        if(icon.equalsIgnoreCase("people"))
+            holder.iconDis.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_people));
+        else if(icon.equalsIgnoreCase("pcOnDesk"))
+            holder.iconDis.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_pc_on_desk));
+        else if(icon.equalsIgnoreCase("dumbbell"))
+            holder.iconDis.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_dumbbell));
+        else if(icon.equalsIgnoreCase("home"))
+            holder.iconDis.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_home));
+        else if(icon.equalsIgnoreCase("homeAddress"))
+            holder.iconDis.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_home_address));
+        else if(icon.equalsIgnoreCase("homeOffice"))
+            holder.iconDis.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_home_office));
+        else if(icon.equalsIgnoreCase("work"))
+            holder.iconDis.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_work));
+        else if(icon.equalsIgnoreCase("briefcase"))
+            holder.iconDis.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_briefcase));
+
     }
 }
