@@ -42,6 +42,7 @@ public class User {
     @ColumnInfo(name = "CreationTime")
     public long CreateTime;
 
+
     @ColumnInfo(name = "taskDay") // this value holds a long value that indicates what day that task should be displayed in "myDay"
     public long taskDay;
 

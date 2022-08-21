@@ -170,19 +170,17 @@ public class Task_View extends AppCompatActivity {
             List<User>TasksList = db.userDao().getTasks(false); // getTasks() is Sql query in userDao
             for (User u:TasksList) {
 
-                    Calendar taskTime = Calendar.getInstance();
 
+                    Calendar taskTime = Calendar.getInstance();
 
                     taskTime.setTimeInMillis(u.getTaskDay());
                     int TaskYear = taskTime.get(Calendar.YEAR);
                     int TaskDOY = taskTime.get(Calendar.DAY_OF_YEAR);
 
-
                     if (TaskYear == TodayYear && TaskDOY == TodayDOY){ // this will compare today's year and day of year << with >> task's year and day of year
                         userList.add(u);
-                    }
+                    }}
 
-            }
 
             //userList = TasksList;
             userList.addAll(eventsList);
