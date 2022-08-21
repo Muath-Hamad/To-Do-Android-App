@@ -1,25 +1,28 @@
 package com.training.calendar;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
-
-import yuku.ambilwarna.AmbilWarnaDialog;
 
 public class Create_Category extends AppCompatActivity {
 
-    Button ColorPicker , saveButton;
+    Button ColorPicker , saveButton , IconPicker;
     TextView preview; // this will help show the user what color is currently chosen
     EditText categoryTitle; // this will have the name of category
     int ChosenColor;
     AppDatabase db;
     CategoryData data ;
+    ImageView iconChosen , colorChosen;
+    String icon= null;
+    String color= null;
     int IDtoUpdate;
     String oldCat;
     String sText;
@@ -34,13 +37,15 @@ public class Create_Category extends AppCompatActivity {
         loadAndExcute();
 
 
+
+
     }
 
     private void loadAndExcute() { // this method will determine if user is updating or creating new category
 
         if (getIntent().getBooleanExtra("EXTRA_CATEGORY_UPDATE",false)){
 
-            preview.setBackgroundColor(getIntent().getIntExtra("EXTRA_CATEGORY_COLOR", ChosenColor));
+            //preview.setBackgroundColor(getIntent().getIntExtra("EXTRA_CATEGORY_COLOR", ChosenColor));
             categoryTitle.setText(getIntent().getStringExtra("EXTRA_CATEGORY_TITLE"));
             IDtoUpdate = getIntent().getIntExtra("EXTRA_CATEGORY_ID",-1); // This default value should never be used ,if used produce error
 
@@ -78,42 +83,31 @@ public class Create_Category extends AppCompatActivity {
         data = new CategoryData();
     }
     private void initViews() {
-        ColorPicker = findViewById(R.id.CategoryColorPicker);
-        preview = findViewById(R.id.ColorPreview);
+        ColorPicker = findViewById(R.id.colorsBTN);
+        IconPicker = findViewById(R.id.iconBTN);
         categoryTitle = findViewById(R.id.TitleEdit);
         saveButton = findViewById(R.id.SaveCategoryBTN);
-        ChosenColor = ContextCompat.getColor(this , com.google.android.material.R.color.design_default_color_background);
+        colorChosen = findViewById(R.id.catgColorChosen);
+        iconChosen = findViewById(R.id.catgIconChosen);
+        iconChosen.setColorFilter(getResources().getColor(R.color.white));
+        IconPicker.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                iconsDialog();
+
+
+
+            }
+        });
         ColorPicker.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                openColorPicker();
-
-            }
-        });
-        categoryTitle.setOnClickListener(new View.OnClickListener() { // clear field on first use
-            @Override
-            public void onClick(View view) {
-                if (getString(R.string.eventTitleText).equals(categoryTitle.getText().toString())){
-                    categoryTitle.setText("");
-                }
+            public void onClick(View v) {
+               colorsDialog();
             }
         });
     }
 
-    private void openColorPicker() {
-        AmbilWarnaDialog ambilWarnaDialog =new AmbilWarnaDialog(this, ChosenColor, new AmbilWarnaDialog.OnAmbilWarnaListener() {
-            @Override
-            public void onCancel(AmbilWarnaDialog dialog) {}
 
-            @Override
-            public void onOk(AmbilWarnaDialog dialog, int color) {
-
-                ChosenColor = color; // this will save the color chosen on the dialog
-                preview.setBackgroundColor(color); // set the preview to chosen color
-            }
-        });
-        ambilWarnaDialog.show();
-    }
 
     public void SaveNewButton() { // write data into DB and then return to main activity
 
@@ -127,6 +121,8 @@ public class Create_Category extends AppCompatActivity {
 
                     data.setTitle(sText);
                     data.setColor(ChosenColor);
+                    data.setNewColor(color);
+                    data.setIcon(icon);
                     db.categoryDao().insert(data);
                 }
                 Intent i2 = new Intent(Create_Category.this ,MainActivity.class);
@@ -135,5 +131,174 @@ public class Create_Category extends AppCompatActivity {
             }
         });
 
+    }
+    public void colorsDialog(){
+        Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.category_colors);
+        int width = WindowManager.LayoutParams.WRAP_CONTENT;
+        int height = WindowManager.LayoutParams.WRAP_CONTENT;
+        dialog.getWindow().setLayout(width, height);
+        dialog.show();
+        ImageView blue = dialog.findViewById(R.id.catgColorBlue);
+        ImageView black = dialog.findViewById(R.id.catgColorBlack);
+        ImageView gray = dialog.findViewById(R.id.catgColorGray);
+        ImageView green = dialog.findViewById(R.id.catgColorGreen);
+        ImageView red = dialog.findViewById(R.id.catgColorRed);
+        ImageView purple = dialog.findViewById(R.id.catgColorPurple);
+        ImageView teal = dialog.findViewById(R.id.catgColorTeal);
+        ImageView maroon = dialog.findViewById(R.id.catgColorMaroon);
+        blue.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                colorChosen.setColorFilter(getResources().getColor(R.color.blue));
+                color = "blue";
+                dialog.dismiss();
+            }
+        });
+        black.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                colorChosen.setColorFilter(getResources().getColor(R.color.black));
+                color = "black";
+                dialog.dismiss();
+            }
+        });
+        gray.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                colorChosen.setColorFilter(getResources().getColor(R.color.gray));
+                color = "gray";
+                dialog.dismiss();
+            }
+        });
+        green.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                colorChosen.setColorFilter(getColor(R.color.green));
+                color = "green";
+                dialog.dismiss();
+            }
+        });
+        red.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                colorChosen.setColorFilter(getResources().getColor(R.color.red));
+                color = "red";
+                dialog.dismiss();
+            }
+        });
+        purple.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                colorChosen.setColorFilter(getResources().getColor(R.color.purple_500));
+                color = "purple";
+                dialog.dismiss();
+            }
+        });
+        teal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                colorChosen.setColorFilter(getResources().getColor(R.color.teal_200));
+                color = "teal";
+                dialog.dismiss();
+            }
+        });
+        maroon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                colorChosen.setColorFilter(getResources().getColor(R.color.maroon));
+                color = "maroon";
+                dialog.dismiss();
+            }
+        });
+
+    }
+    public void iconsDialog(){
+        Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.category_icons);
+        int width = WindowManager.LayoutParams.WRAP_CONTENT;
+        int height = WindowManager.LayoutParams.WRAP_CONTENT;
+        dialog.getWindow().setLayout(width, height);
+        dialog.show();
+        ImageView dumbbell = dialog.findViewById(R.id.Dumbbell);
+        ImageView home = dialog.findViewById(R.id.Home);
+        ImageView homeAddress = dialog.findViewById(R.id.Home_Address);
+        ImageView homeOffice = dialog.findViewById(R.id.Home_Office);
+        ImageView work = dialog.findViewById(R.id.Work);
+        ImageView pcOnDesk = dialog.findViewById(R.id.pc_on_desk);
+        ImageView briefcase = dialog.findViewById(R.id.Briefcase);
+        ImageView people = dialog.findViewById(R.id.People);
+        dumbbell.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                iconChosen.setColorFilter(null);
+                iconChosen.setImageResource(R.drawable.ic_dumbbell);
+                icon = "dumbbell";
+                dialog.dismiss();
+            }
+        });
+        home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                iconChosen.setColorFilter(null);
+                iconChosen.setImageResource(R.drawable.ic_home);
+                icon = "home";
+                dialog.dismiss();
+            }
+        });
+        homeAddress.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                iconChosen.setColorFilter(null);
+                iconChosen.setImageResource(R.drawable.ic_home_address);
+                icon = "homeAddress";
+                dialog.dismiss();
+            }
+        });
+        homeOffice.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                iconChosen.setColorFilter(null);
+                iconChosen.setImageResource(R.drawable.ic_home_office);
+                icon = "homeOffice";
+                dialog.dismiss();
+            }
+        });
+        work.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                iconChosen.setColorFilter(null);
+                iconChosen.setImageResource(R.drawable.ic_work);
+                icon = "work";
+                dialog.dismiss();
+            }
+        });
+        pcOnDesk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                iconChosen.setColorFilter(null);
+                iconChosen.setImageResource(R.drawable.ic_pc_on_desk);
+                icon = "pcOnDesk";
+                dialog.dismiss();
+            }
+        });
+        briefcase.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                iconChosen.setColorFilter(null);
+                iconChosen.setImageResource(R.drawable.ic_briefcase);
+                icon = "briefcase";
+                dialog.dismiss();
+            }
+        });
+        people.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                iconChosen.setColorFilter(null);
+                iconChosen.setImageResource(R.drawable.ic_people);
+                icon = "people";
+                dialog.dismiss();
+            }
+        });
     }
 }

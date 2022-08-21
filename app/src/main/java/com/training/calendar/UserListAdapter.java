@@ -19,6 +19,7 @@ import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -308,7 +309,7 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.MyView
 //        ImageView editBTN;
 //        ImageView deleteBTN;
         ImageView DoneBTN;
-        ImageView infoBTN;
+        LinearLayout infoBTN;
 
 
         public MyViewHolder(View itemView) {
@@ -319,7 +320,7 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.MyView
 //            editBTN = itemView.findViewById(R.id.taskEditBTN);
 //            deleteBTN = itemView.findViewById(R.id.taskDeleteBTN);
             DoneBTN = itemView.findViewById(R.id.taskDoneBTN);
-            infoBTN = itemView.findViewById(R.id.taskInfoBTN);
+            infoBTN = itemView.findViewById(R.id.TaskBTN);
 
 
         }

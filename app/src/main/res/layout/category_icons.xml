@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/Home_Office"
+        android:layout_width="36dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="3dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/Home_Address"
+        app:layout_constraintTop_toTopOf="@+id/Home_Address"
+        app:srcCompat="@drawable/ic_home_office" />
+
+    <ImageView
+        android:id="@+id/Briefcase"
+        android:layout_width="36dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="3dp"
+        app:layout_constraintEnd_toStartOf="@+id/Dumbbell"
+        app:layout_constraintStart_toEndOf="@+id/pc_on_desk"
+        app:layout_constraintTop_toBottomOf="@+id/Work"
+        app:srcCompat="@drawable/ic_briefcase" />
+
+    <ImageView
+        android:id="@+id/pc_on_desk"
+        android:layout_width="36dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="3dp"
+        app:layout_constraintEnd_toStartOf="@+id/Briefcase"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Work"
+        app:srcCompat="@drawable/ic_pc_on_desk" />
+
+    <ImageView
+        android:id="@+id/People"
+        android:layout_width="36dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="3dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/Dumbbell"
+        app:layout_constraintTop_toBottomOf="@+id/Home_Office"
+        app:srcCompat="@drawable/ic_people" />
+
+    <ImageView
+        android:id="@+id/Work"
+        android:layout_width="36dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="3dp"
+        app:layout_constraintEnd_toStartOf="@+id/Home"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/ic_work"
+        tools:layout_editor_absoluteY="263dp" />
+
+    <ImageView
+        android:id="@+id/Dumbbell"
+        android:layout_width="36dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="3dp"
+        app:layout_constraintEnd_toStartOf="@+id/People"
+        app:layout_constraintStart_toEndOf="@+id/Briefcase"
+        app:layout_constraintTop_toBottomOf="@+id/Home"
+        app:srcCompat="@drawable/ic_dumbbell" />
+
+    <ImageView
+        android:id="@+id/Home_Address"
+        android:layout_width="36dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="3dp"
+        app:layout_constraintEnd_toStartOf="@+id/Home_Office"
+        app:layout_constraintStart_toEndOf="@+id/Home"
+        app:layout_constraintTop_toTopOf="@+id/Home"
+        app:srcCompat="@drawable/ic_home_address" />
+
+    <ImageView
+        android:id="@+id/Home"
+        android:layout_width="36dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="3dp"
+        app:layout_constraintEnd_toStartOf="@+id/Home_Address"
+        app:layout_constraintStart_toEndOf="@+id/Work"
+        app:layout_constraintTop_toTopOf="@+id/Work"
+        app:srcCompat="@drawable/ic_home" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

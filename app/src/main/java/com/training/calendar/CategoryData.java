@@ -18,6 +18,27 @@ public class CategoryData implements Serializable {
     @ColumnInfo(name = "color")
     private int color;
 
+    @ColumnInfo(name = "newColor")
+    private String newColor;
+
+    @ColumnInfo(name = "Icon")
+    private String icon;
+
+    public String getNewColor() {
+        return newColor;
+    }
+
+    public void setNewColor(String newColor) {
+        this.newColor = newColor;
+    }
+
+    public String getIcon() {
+        return icon;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
+    }
 
     public int getID() {
         return ID;
