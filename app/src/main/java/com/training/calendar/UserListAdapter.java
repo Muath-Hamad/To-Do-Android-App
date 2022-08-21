@@ -212,11 +212,13 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.MyView
                             d.setEndDate(newUpdatedEndD);
                             d.setStartTime(newUpdatedStartTime);
                             d.setEndTime(newUpdatedEndTime);
+                            d.setTask(false);
                         }else{
                             d.setEndDate(-1);
                             d.setStartTime(-1);
                             d.setStartTime(newUpdatedStartTime);
                             d.setEndTime(newUpdatedEndTime);
+                            d.setTask(true);
                         }
                         DB.userDao().Update(d);
                         notifyDataSetChanged();
