@@ -19,7 +19,6 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TimePicker;
 import android.widget.Toast;
-
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
@@ -70,14 +69,9 @@ public class Task_View extends AppCompatActivity {
         recyclerView.setAdapter(userListAdapter);
     }
     private void loadUserList(){
-<<<<<<< HEAD
-        AppDatabase db = AppDatabase.getDbInstance(this.getApplicationContext());
-        List<User> userList = new ArrayList<>();
-=======
         db = AppDatabase.getDbInstance(this.getApplicationContext());
-        List<User> userList;
-        Button TaskCatAdd= findViewById(R.id.testing123);
->>>>>>> a641330 (Successfully added categroy task creation and today's view task creation)
+        List<User> userList= new ArrayList<>();
+        Button TaskCatAdd = findViewById(R.id.testing123);
 
         if (getIntent().getBooleanExtra("EXTRA_isCAT",false)){
             String catname = getIntent().getStringExtra("EXTRA_CATname");
