@@ -28,6 +28,9 @@ public interface UserDao {
     @Query("SELECT * FROM task_table WHERE hasDate = :hasDate")
     List<User> getTasks(boolean hasDate); // this will be used to get all tasks that has no date
 
+    @Query("UPDATE task_table SET taskDay = :taskDay WHERE uid = :id AND isTask = :T") // this query will update an entry to be in user myDay list
+    void AddTomyDay(int id, long taskDay , boolean T);
+
     @Query("SELECT * FROM task_table WHERE uid IN (:userIds)")
     List<User> loadAllByIds(int[] userIds);
 
