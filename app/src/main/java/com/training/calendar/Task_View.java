@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Calendar;
 
@@ -34,7 +35,7 @@ public class Task_View extends AppCompatActivity {
     }
     private void loadUserList(){
         AppDatabase db = AppDatabase.getDbInstance(this.getApplicationContext());
-        List<User> userList;
+        List<User> userList = new ArrayList<>();
 
         if (getIntent().getBooleanExtra("EXTRA_isCAT",false)){
             String catname = getIntent().getStringExtra("EXTRA_CATname");
@@ -43,8 +44,27 @@ public class Task_View extends AppCompatActivity {
         }else if (getIntent().getBooleanExtra("EXTRA_TODAY",false)){ // if the caller is today button then today will be loaded in the list else all events will be loaded
 
             List<User> eventsList = db.userDao().getTodayLong(getTodayLong(),true);
-            List<User>TasksList = db.userDao().getTasks(false);
-            userList = TasksList;
+            List<User>TasksList = db.userDao().getTasks(false); // getTasks() is Sql query in userDao
+            for (User u:TasksList) {
+
+                if (u.getTask()){
+                    Calendar taskTime = Calendar.getInstance();
+                    Calendar TodayTime = Calendar.getInstance();
+
+                    taskTime.setTimeInMillis(u.getTaskDay());
+                    int TaskYear = taskTime.get(Calendar.YEAR);
+                    int TaskDOY = taskTime.get(Calendar.DAY_OF_YEAR);
+
+                    int TodayYear = taskTime.get(Calendar.YEAR);
+                    int TodayDOY = taskTime.get(Calendar.DAY_OF_YEAR);
+                    if (TaskYear == TodayYear && TaskDOY == TodayDOY){ // this will compare today's year and day of year << with >> task's year and day of year
+                        userList.add(u);
+
+                    }
+                }
+            }
+
+            //userList = TasksList;
             userList.addAll(eventsList);
 
         }else{
