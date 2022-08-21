@@ -272,10 +272,14 @@ public class Create_Event extends AppCompatActivity {
             System.out.println("endD in Create Event"+ (endD-2));
             user.setStartTime(sTime); // this will store long in DB ,, this will point to the exact minute the event start
             user.setEndTime(eTime); // this will store long in DB ,, this will point to the exact minute the event end
+            user.setTask(false); // this indicates that this entry is an "Event" not a task
+            user.setTaskDay(-1);
         }else{
             user.setStartDate(-1); // this will store long in DB
             user.setEndDate(-1); // this will store long in DB
-
+            user.setTask(true); // this indicates that this entry is a "Task" not an event
+            Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+            user.setTaskDay(timestamp.getTime()); // this will add new tasks automatically to user's "myDay"
             user.setStartTime(sTime); // this will store long in DB
             user.setEndTime(eTime); // this will store long in DB
         }

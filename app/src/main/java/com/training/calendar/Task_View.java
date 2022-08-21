@@ -19,7 +19,6 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TimePicker;
 import android.widget.Toast;
-
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
@@ -27,10 +26,10 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import java.util.ArrayList;
-import java.util.Calendar;
+import java.sql.Timestamp;
 import java.util.List;
+import java.util.Calendar;
 import java.util.Locale;
 
 public class Task_View extends AppCompatActivity {
@@ -68,9 +67,11 @@ public class Task_View extends AppCompatActivity {
         recyclerView.setAdapter(userListAdapter);
     }
     private void loadUserList(){
+
         db = AppDatabase.getDbInstance(this.getApplicationContext());
-        List<User> userList;
+        List<User> userList= new ArrayList<>();
         Button TaskCatAdd= findViewById(R.id.testing123);
+
 
         if (getIntent().getBooleanExtra("EXTRA_isCAT",false)){
             String catname = getIntent().getStringExtra("EXTRA_CATname");
@@ -162,8 +163,27 @@ public class Task_View extends AppCompatActivity {
         }else if (getIntent().getBooleanExtra("EXTRA_TODAY",false)){ // if the caller is today button then today will be loaded in the list else all events will be loaded
 
             List<User> eventsList = db.userDao().getTodayLong(getTodayLong(),true);
-            List<User>TasksList = db.userDao().getTasks(false);
-            userList = TasksList;
+            List<User>TasksList = db.userDao().getTasks(false); // getTasks() is Sql query in userDao
+            for (User u:TasksList) {
+
+                if (u.getTask()){
+                    Calendar taskTime = Calendar.getInstance();
+                    Calendar TodayTime = Calendar.getInstance();
+
+                    taskTime.setTimeInMillis(u.getTaskDay());
+                    int TaskYear = taskTime.get(Calendar.YEAR);
+                    int TaskDOY = taskTime.get(Calendar.DAY_OF_YEAR);
+
+                    int TodayYear = taskTime.get(Calendar.YEAR);
+                    int TodayDOY = taskTime.get(Calendar.DAY_OF_YEAR);
+                    if (TaskYear == TodayYear && TaskDOY == TodayDOY){ // this will compare today's year and day of year << with >> task's year and day of year
+                        userList.add(u);
+
+                    }
+                }
+            }
+
+            //userList = TasksList;
             userList.addAll(eventsList);
             TaskCatAdd.setVisibility(View.VISIBLE);
             TaskCatAdd.setOnClickListener(new View.OnClickListener() {

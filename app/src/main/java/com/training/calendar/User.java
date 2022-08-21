@@ -54,6 +54,28 @@ public class User {
     @ColumnInfo(name = "CreationTime")
     public long CreateTime;
 
+    @ColumnInfo(name = "isTask")
+    public Boolean isTask;
+
+    @ColumnInfo(name = "taskDay") // this value holds a ling value that indicates what day that task should be displayed in "myDay"
+    public long taskDay;
+
+    public Boolean getTask() {
+        return isTask;
+    }
+
+    public void setTask(Boolean task) {
+        isTask = task;
+    }
+
+    public long getTaskDay() {
+        return taskDay;
+    }
+
+    public void setTaskDay(long taskDay) {
+        this.taskDay = taskDay;
+    }
+
     public void setStartDate(long startDate) {
         this.startDate = startDate;
     }
