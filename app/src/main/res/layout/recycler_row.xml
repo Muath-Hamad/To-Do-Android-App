@@ -37,12 +37,27 @@
     </LinearLayout>
 
 
+
+<LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="10dp">
     <ImageView
         android:id="@+id/taskDoneBTN"
-        android:layout_width="34dp"
-        android:layout_height="34dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:src="@drawable/ic_done_circle"></ImageView>
+
+    <ImageView
+        android:id="@+id/AddmyDayBTN"
+        android:layout_width="31dp"
+        android:layout_height="34dp"
+        android:layout_marginStart="8dp"
+        android:src="@drawable/ic__today"></ImageView>
+</LinearLayout>
+
 
 
 </LinearLayout>
