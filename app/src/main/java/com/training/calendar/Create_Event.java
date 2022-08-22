@@ -260,10 +260,10 @@ public class Create_Event extends AppCompatActivity {
         user.date = getDate();
         user.setDone(false);
 
-        user.setStartDate(StartDate.getText().toString()); // this  store String in DB
-        user.setEndDate(EndDate.getText().toString()); // this  store String in DB
-        user.setStartTime(StartTime.getText().toString());// this  store String in DB
-        user.setEndTime(EndTime.getText().toString());// this  store String in DB
+//        user.setStartDate(StartDate.getText().toString()); // this  store String in DB
+//        user.setEndDate(EndDate.getText().toString()); // this  store String in DB
+//        user.setStartTime(StartTime.getText().toString());// this  store String in DB
+//        user.setEndTime(EndTime.getText().toString());// this  store String in DB
 
         if(hasDate){
             user.setStartDate(startD-1); // this will store long in DB

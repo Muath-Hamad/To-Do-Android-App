@@ -21,14 +21,6 @@ public class User {
     @ColumnInfo(name = "Category")
     public String cat;
 
-    @ColumnInfo(name = "StartDate")
-    public String StartDate;
-    @ColumnInfo(name = "EndDate")
-    public String EndDate;
-
-    @ColumnInfo(name = "StartTime")
-    public String StartTime;
-
     @ColumnInfo(name = "longStartTime")
     public long startTime;
 
@@ -41,10 +33,6 @@ public class User {
     @ColumnInfo(name = "longEndDate")
     public long endDate;
 
-
-    @ColumnInfo(name = "EndTime")
-    public String EndTime;
-
     @ColumnInfo(name = "hasDate")
     public Boolean hasDate;
 
@@ -54,11 +42,8 @@ public class User {
     @ColumnInfo(name = "CreationTime")
     public long CreateTime;
 
-
     @ColumnInfo(name = "taskDay") // this value holds a long value that indicates what day that task should be displayed in "myDay"
     public long taskDay;
-
-
 
     public long getTaskDay() {
         return taskDay;
@@ -84,9 +69,7 @@ public class User {
         this.CreateTime = createTime;
     }
 
-    public String getStartDate() {
-        return StartDate;
-    }
+
     public void setStartTime(long startTime) {
         this.startTime = startTime;
     }
@@ -95,33 +78,6 @@ public class User {
         this.endTime = endTime;
     }
 
-    public void setStartDate(String startDate) {
-        StartDate = startDate;
-    }
-
-    public String getEndDate() {
-        return EndDate;
-    }
-
-    public void setEndDate(String endDate) {
-        EndDate = endDate;
-    }
-
-    public String getStartTime() {
-        return StartTime;
-    }
-
-    public void setStartTime(String startTime) {
-        StartTime = startTime;
-    }
-
-    public String getEndTime() {
-        return EndTime;
-    }
-
-    public void setEndTime(String endTime) {
-        EndTime = endTime;
-    }
 
     public Boolean getHasDate() {
         return hasDate;
