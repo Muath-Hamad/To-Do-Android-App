@@ -7,6 +7,7 @@ import android.app.TimePickerDialog;
 import android.content.Context;
 import android.graphics.Paint;
 import android.os.Build;
+import android.view.DragEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +31,7 @@ import androidx.appcompat.widget.SwitchCompat;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -46,7 +48,7 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.MyView
     private AppDatabase DB;
     private int test;
     private SwitchCompat dateSwitch;
-    private boolean hasDate;
+    private boolean hasDate , controlsisShown = false , isTask;
     private CardView sCard ,eCard;
     private  Button btDateStart , btDateEnd , btTimeStart , btTimeEnd;
     private boolean Caller , UpdateTime = false;
@@ -104,6 +106,7 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.MyView
         holder.taskName.setText(this.userList.get(position).taskName);
         holder.catDisplay.setText(this.userList.get(position).cat);
 
+
         if (data.getDone()){
 
             holder.taskName.setPaintFlags(holder.taskName.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
@@ -130,6 +133,38 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.MyView
             }
         });
 
+        holder.infoBTN.setOnLongClickListener(new View.OnLongClickListener() { // this block will display options only if the entry is of type Task
+            @Override
+            public boolean onLongClick(View view) {
+                User Entry = userList.get(holder.getAdapterPosition());
+
+                if (controlsisShown ){
+
+                        holder.AddTomyDAy.setVisibility(View.INVISIBLE);
+                        holder.DoneBTN.setVisibility(View.INVISIBLE);
+                        controlsisShown = false;
+
+
+                }else{
+                    if (!Entry.getHasDate()) {
+                    holder.AddTomyDAy.setVisibility(View.VISIBLE);
+                    holder.DoneBTN.setVisibility(View.VISIBLE);
+                    controlsisShown = true;}
+
+                }
+                return true;
+            }
+        });
+
+        holder.AddTomyDAy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                User Entry = userList.get(holder.getAdapterPosition());
+                Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+                DB.userDao().AddTomyDay(Entry.uid ,timestamp.getTime(),false );
+                System.out.println("add to my day have been pressed");
+            }
+        });
 
         holder.infoBTN.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -212,13 +247,13 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.MyView
                             d.setEndDate(newUpdatedEndD);
                             d.setStartTime(newUpdatedStartTime);
                             d.setEndTime(newUpdatedEndTime);
-                            d.setTask(false);
+
                         }else{
                             d.setEndDate(-1);
                             d.setStartTime(-1);
                             d.setStartTime(newUpdatedStartTime);
                             d.setEndTime(newUpdatedEndTime);
-                            d.setTask(true);
+
                         }
                         DB.userDao().Update(d);
                         notifyDataSetChanged();
@@ -310,7 +345,7 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.MyView
         TextView taskDesc;
 //        ImageView editBTN;
 //        ImageView deleteBTN;
-        ImageView DoneBTN;
+        ImageView DoneBTN , AddTomyDAy;
         LinearLayout infoBTN;
 
 
@@ -319,10 +354,12 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.MyView
             taskName = itemView.findViewById(R.id.TaskName);
 //            taskDesc = itemView.findViewById(R.id.description_Field);
             catDisplay = itemView.findViewById(R.id.Date);
-//            editBTN = itemView.findViewById(R.id.taskEditBTN);
 //            deleteBTN = itemView.findViewById(R.id.taskDeleteBTN);
             DoneBTN = itemView.findViewById(R.id.taskDoneBTN);
+            AddTomyDAy = itemView.findViewById(R.id.AddmyDayBTN);
             infoBTN = itemView.findViewById(R.id.TaskBTN);
+            DoneBTN.setVisibility(View.INVISIBLE);
+            AddTomyDAy.setVisibility(View.INVISIBLE);
 
 
         }
