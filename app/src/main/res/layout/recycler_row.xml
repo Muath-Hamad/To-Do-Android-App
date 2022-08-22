@@ -12,7 +12,7 @@
     android:padding="16dp">
 
     <LinearLayout
-        android:layout_width="276dp"
+        android:layout_width="316dp"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="10dp">
@@ -37,21 +37,12 @@
     </LinearLayout>
 
 
-
-        <ImageView
-            android:id="@+id/taskDoneBTN"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:src="@drawable/ic_done_circle"></ImageView>
-
     <ImageView
-        android:id="@+id/taskInfoBTN"
-        android:layout_width="31dp"
+        android:id="@+id/taskDoneBTN"
+        android:layout_width="34dp"
         android:layout_height="34dp"
         android:layout_marginStart="8dp"
-        android:onClick="updateTasK"
-        android:src="@drawable/ic_info"></ImageView>
+        android:src="@drawable/ic_done_circle"></ImageView>
 
 
 </LinearLayout>
