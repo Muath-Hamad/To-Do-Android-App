@@ -58,6 +58,7 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.MyView
 
 
 
+
     public UserListAdapter(Context context, List<User> userList) {
         this.context = context;
         this.userList = userList;
@@ -107,12 +108,14 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.MyView
         holder.catDisplay.setText(this.userList.get(position).cat);
 
 
-        if (data.getDone()){
+//        if (data.getDone()){
+//
+//            holder.taskName.setPaintFlags(holder.taskName.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+////            holder.taskDesc.setPaintFlags(holder.taskName.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+////            holder.catDisplay.setPaintFlags(holder.taskName.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+//        }
 
-            holder.taskName.setPaintFlags(holder.taskName.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-//            holder.taskDesc.setPaintFlags(holder.taskName.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-//            holder.catDisplay.setPaintFlags(holder.taskName.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-        }
+
 
         holder.DoneBTN.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -174,6 +177,7 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.MyView
                 int sID = d.uid;
                 String sText = d.taskName;
                 String sDesc = d.description;
+                String cat = d.cat;
                 hasDate = d.hasDate;
 
 
@@ -188,12 +192,14 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.MyView
                 EditText titleUpd = dialog.findViewById(R.id.titleUpdate);
                 EditText descUp = dialog.findViewById(R.id.descUpdate);
                 Button btUpdate = dialog.findViewById(R.id.updateBTN);
+                AutoCompleteTextView category = dialog.findViewById(R.id.auto_complete_text_Update);
+                category.setHint(cat);
                 dateSwitch = dialog.findViewById(R.id.DateSwitchUpdate);
                 dateSwitch.setChecked(d.hasDate);
                 initSwitchListener();
                 sCard =dialog.findViewById(R.id.StartCardUpdate);
                 eCard =dialog.findViewById(R.id.EndCardUpdate);
-//         default state
+                //default state
                 if (d.hasDate){
                     sCard.setVisibility(View.VISIBLE);
                     eCard.setVisibility(View.VISIBLE);
@@ -239,8 +245,10 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.MyView
 
                         String uText = titleUpd.getText().toString();
                         String uDesc = descUp.getText().toString();
+                        String uCategory = Category;
                         d.taskName = uText;
                         d.description = uDesc;
+                        d.cat = uCategory;
                         d.setHasDate(hasDate);
                         if (hasDate && UpdateTime){
                             d.setStartDate(newUpdatedstartD);
@@ -257,6 +265,7 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.MyView
                         }
                         DB.userDao().Update(d);
                         notifyDataSetChanged();
+                        notifyItemRangeChanged(position, userList.size());
                         dialog.dismiss();
                     }
                 });
@@ -281,6 +290,7 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.MyView
 
             }
         });
+
 
     }
 
@@ -360,6 +370,7 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.MyView
             infoBTN = itemView.findViewById(R.id.TaskBTN);
             DoneBTN.setVisibility(View.INVISIBLE);
             AddTomyDAy.setVisibility(View.INVISIBLE);
+
 
 
         }
@@ -472,4 +483,5 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.MyView
         timePickerDialog.setTitle("Select Time");
         timePickerDialog.show();}
     }
+
 }
