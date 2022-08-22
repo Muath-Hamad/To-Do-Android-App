@@ -270,12 +270,10 @@ public class Create_Event extends AppCompatActivity {
             user.setEndDate(endD+2); // this will store long in DB
             user.setStartTime(sTime); // this will store long in DB ,, this will point to the exact minute the event start
             user.setEndTime(eTime); // this will store long in DB ,, this will point to the exact minute the event end
-
             user.setTaskDay(-1);
         }else{
             user.setStartDate(-1); // this will store long in DB
             user.setEndDate(-1); // this will store long in DB
-
             Timestamp timestamp = new Timestamp(System.currentTimeMillis());
             user.setTaskDay(timestamp.getTime()); // this will add new tasks automatically to user's "myDay"
             user.setStartTime(sTime); // this will store long in DB
