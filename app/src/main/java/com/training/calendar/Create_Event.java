@@ -118,7 +118,7 @@ public class Create_Event extends AppCompatActivity {
 
     }
     private void initSwitchListener() {
-
+//
         dateSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean Checked) {
