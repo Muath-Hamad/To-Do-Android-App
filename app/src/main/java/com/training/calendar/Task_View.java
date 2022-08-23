@@ -19,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TimePicker;
 import android.widget.Toast;
+
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
@@ -29,7 +30,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
@@ -46,21 +46,22 @@ public class Task_View extends AppCompatActivity {
     private String Category;
     private SwitchCompat dateSwitch;
     private boolean hasDate;
-    private CardView sCard ,eCard;
-    private  Button btDateStart , btDateEnd , btTimeStart , btTimeEnd;
-    private boolean Caller , UpdateTime = false;
+    private CardView sCard, eCard;
+    private Button btDateStart, btDateEnd, btTimeStart, btTimeEnd;
+    private boolean Caller, UpdateTime = false;
     private DatePickerDialog datePickerDialog;
-    private int sDay = -1 ,sMonth ,sYear, eDay = -1 ,eMonth ,eYear , hour , minute;
-    private long newUpdatedstartD , newUpdatedEndD , newUpdatedStartTime , newUpdatedEndTime;
+    private int sDay = -1, sMonth, sYear, eDay = -1, eMonth, eYear, hour, minute;
+    private long newUpdatedstartD, newUpdatedEndD, newUpdatedStartTime, newUpdatedEndTime;
 
 
-    protected void onCreate(Bundle savedInstanceState){
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task_view);
         initRecyclerView();
         loadUserList();
     }
-    private void initRecyclerView(){
+
+    private void initRecyclerView() {
         RecyclerView recyclerView = findViewById(R.id.RecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
@@ -68,118 +69,43 @@ public class Task_View extends AppCompatActivity {
         userListAdapter = new UserListAdapter(this);
         recyclerView.setAdapter(userListAdapter);
     }
-    private void loadUserList(){
+
+    private void loadUserList() {
         db = AppDatabase.getDbInstance(this.getApplicationContext());
-        List<User> userList= new ArrayList<>();
+        List<User> userList = new ArrayList<>();
         Button TaskCatAdd = findViewById(R.id.testing123);
 
-        if (getIntent().getBooleanExtra("EXTRA_isCAT",false)){
+        if (getIntent().getBooleanExtra("EXTRA_isCAT", false)) {
             String catname = getIntent().getStringExtra("EXTRA_CATname");
             userList = db.userDao().getByCategory(catname);
             TaskCatAdd.setVisibility(View.VISIBLE);
             TaskCatAdd.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Dialog dialog = new Dialog(Task_View.this);
-                    dialog.setContentView(R.layout.activity_update_task);
-                    autoCompleteTextView = dialog.findViewById(R.id.auto_complete_text_Update);
-                    initDropDownList();
-                    int width = WindowManager.LayoutParams.MATCH_PARENT;
-                    int height = WindowManager.LayoutParams.WRAP_CONTENT;
-                    dialog.getWindow().setLayout(width, height);
-                    dialog.show();
-                    EditText titleUpd = dialog.findViewById(R.id.titleUpdate);
-                    EditText descUp = dialog.findViewById(R.id.descUpdate);
-                    Button save = dialog.findViewById(R.id.updateBTN);
-                    AutoCompleteTextView category = dialog.findViewById(R.id.auto_complete_text_Update);
-                    //category.setHint(cat);
-
-                    dateSwitch = dialog.findViewById(R.id.DateSwitchUpdate);
-                    initSwitchListener();
-                    sCard =dialog.findViewById(R.id.StartCardUpdate);
-                    eCard =dialog.findViewById(R.id.EndCardUpdate);
-                    initDatePicker();
-                    btDateStart = dialog.findViewById(R.id.StartDateUpdate);
-                    btDateEnd = dialog.findViewById(R.id.EndDateUpdate);
-                    btTimeStart = dialog.findViewById(R.id.StartTimeUpdate);
-                    btTimeEnd = dialog.findViewById(R.id.EndTimeUpdate);
-                    ImageView deleteBTN = dialog.findViewById(R.id.taskDeleteBTN);
-                    deleteBTN.setVisibility(View.INVISIBLE);
-
-                    btDateStart.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            openDatePicker1(btDateStart);
-                        }
-                    });
-                    btDateEnd.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            openDatePicker1(btDateEnd);
-                        }
-                    });
-                    btTimeStart.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            popTimePicker1(btTimeStart);
-                        }
-                    });
-                    btTimeEnd.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            popTimePicker1(btTimeEnd);
-                        }
-                    });
-                    save.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            User d = new User();
-                            String uText = titleUpd.getText().toString();
-                            String uDesc = descUp.getText().toString();
-                            String uCategory = Category;
-                            d.taskName = uText;
-                            d.description = uDesc;
-                            d.cat = uCategory;
-                            d.setHasDate(hasDate);
-                            if (hasDate && UpdateTime){
-                                d.setStartDate(newUpdatedstartD);
-                                d.setEndDate(newUpdatedEndD);
-                                d.setStartTime(newUpdatedStartTime);
-                                d.setEndTime(newUpdatedEndTime);
-                            }else{
-                                d.setEndDate(-1);
-                                d.setStartTime(-1);
-                                d.setStartTime(newUpdatedStartTime);
-                                d.setEndTime(newUpdatedEndTime);
-                            }
-                            db.userDao().insertAll(d);
-                            userListAdapter.notifyDataSetChanged();
-                            //notifyItemRangeChanged(position, userList.size());
-                            dialog.dismiss();
-                        }
-                    });
+                    dialogShow();
                 }
             });
-        }else if (getIntent().getBooleanExtra("EXTRA_TODAY",false)){ // if the caller is today button then today will be loaded in the list else all events will be loaded
+        } else if (getIntent().getBooleanExtra("EXTRA_TODAY", false)) { // if the caller is today button then today will be loaded in the list else all events will be loaded
 
             Calendar TodayTime = Calendar.getInstance();
             int TodayYear = TodayTime.get(Calendar.YEAR);
             int TodayDOY = TodayTime.get(Calendar.DAY_OF_YEAR);
 
-            List<User> eventsList = db.userDao().getTodayLong(getTodayLong(),true);
-            List<User>TasksList = db.userDao().getTasks(false); // getTasks() is Sql query in userDao
-            for (User u:TasksList) {
+            List<User> eventsList = db.userDao().getTodayLong(getTodayLong(), true);
+            List<User> TasksList = db.userDao().getTasks(false); // getTasks() is Sql query in userDao
+            for (User u : TasksList) {
 
 
-                    Calendar taskTime = Calendar.getInstance();
+                Calendar taskTime = Calendar.getInstance();
 
-                    taskTime.setTimeInMillis(u.getTaskDay());
-                    int TaskYear = taskTime.get(Calendar.YEAR);
-                    int TaskDOY = taskTime.get(Calendar.DAY_OF_YEAR);
+                taskTime.setTimeInMillis(u.getTaskDay());
+                int TaskYear = taskTime.get(Calendar.YEAR);
+                int TaskDOY = taskTime.get(Calendar.DAY_OF_YEAR);
 
-                    if (TaskYear == TodayYear && TaskDOY == TodayDOY){ // this will compare today's year and day of year << with >> task's year and day of year
-                        userList.add(u);
-                    }}
+                if (TaskYear == TodayYear && TaskDOY == TodayDOY) { // this will compare today's year and day of year << with >> task's year and day of year
+                    userList.add(u);
+                }
+            }
 
 
             //userList = TasksList;
@@ -188,104 +114,31 @@ public class Task_View extends AppCompatActivity {
             TaskCatAdd.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Dialog dialog = new Dialog(Task_View.this);
-                    dialog.setContentView(R.layout.activity_update_task);
-                    autoCompleteTextView = dialog.findViewById(R.id.auto_complete_text_Update);
-                    initDropDownList();
-                    int width = WindowManager.LayoutParams.MATCH_PARENT;
-                    int height = WindowManager.LayoutParams.WRAP_CONTENT;
-                    dialog.getWindow().setLayout(width, height);
-                    dialog.show();
-                    EditText titleUpd = dialog.findViewById(R.id.titleUpdate);
-                    EditText descUp = dialog.findViewById(R.id.descUpdate);
-                    Button save = dialog.findViewById(R.id.updateBTN);
-                    AutoCompleteTextView category = dialog.findViewById(R.id.auto_complete_text_Update);
-                    dateSwitch = dialog.findViewById(R.id.DateSwitchUpdate);
-                    initSwitchListener();
-                    sCard =dialog.findViewById(R.id.StartCardUpdate);
-                    eCard =dialog.findViewById(R.id.EndCardUpdate);
-                    initDatePicker();
-                    btDateStart = dialog.findViewById(R.id.StartDateUpdate);
-                    btDateEnd = dialog.findViewById(R.id.EndDateUpdate);
-                    btTimeStart = dialog.findViewById(R.id.StartTimeUpdate);
-                    btTimeEnd = dialog.findViewById(R.id.EndTimeUpdate);
-                    ImageView deleteBTN = dialog.findViewById(R.id.taskDeleteBTN);
-                    deleteBTN.setVisibility(View.INVISIBLE);
+                   dialogShow();
 
-                    btDateStart.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            openDatePicker1(btDateStart);
-                        }
-                    });
-                    btDateEnd.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            openDatePicker1(btDateEnd);
-                        }
-                    });
-                    btTimeStart.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            popTimePicker1(btTimeStart);
-                        }
-                    });
-                    btTimeEnd.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            popTimePicker1(btTimeEnd);
-                        }
-                    });
-                    save.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            User d = new User();
-                            String uText = titleUpd.getText().toString();
-                            String uDesc = descUp.getText().toString();
-                            String uCategory = Category;
-                            d.taskName = uText;
-                            d.description = uDesc;
-                            d.cat = uCategory;
-                            d.setHasDate(hasDate);
-                            if (hasDate && UpdateTime){
-                                d.setStartDate(newUpdatedstartD);
-                                d.setEndDate(newUpdatedEndD);
-                                d.setStartTime(newUpdatedStartTime);
-                                d.setEndTime(newUpdatedEndTime);
-                            }else{
-                                d.setEndDate(-1);
-                                d.setStartTime(-1);
-                                d.setStartTime(newUpdatedStartTime);
-                                d.setEndTime(newUpdatedEndTime);
-                            }
-                            db.userDao().insertAll(d);
-                            userListAdapter.notifyDataSetChanged();
-                            //notifyItemRangeChanged(position, userList.size());
-                            dialog.dismiss();
-                        }
-                    });
                 }
             });
 
-        }else{
-            userList =db.userDao().getAll();
+        } else {
+            userList = db.userDao().getAll();
             TaskCatAdd.setVisibility(View.INVISIBLE);
 
         }
         userListAdapter.setUserList(userList);
     }
+
     private long getTodayLong() {
         Calendar cal = Calendar.getInstance();
         return cal.getTimeInMillis();
     }
+
     private void initDropDownList() {
-        if(getIntent().hasExtra("EXTRA_CATname")){
+        if (getIntent().hasExtra("EXTRA_CATname")) {
             String catname = getIntent().getStringExtra("EXTRA_CATname");
             autoCompleteTextView.setText(catname);
-            Category =catname;
-        }
-        else
-            autoCompleteTextView.setText("Select Category");
+            Category = catname;
+        } else
+            autoCompleteTextView.setHint("Select Category");
 
         // initialize DB
         db = AppDatabase.getDbInstance(Task_View.this);
@@ -293,13 +146,13 @@ public class Task_View extends AppCompatActivity {
         categoryDataList = db.categoryDao().getAllC();
 
         String[] items = new String[categoryDataList.size()];
-        int i =0;
-        for (Object value: categoryDataList) {
+        int i = 0;
+        for (Object value : categoryDataList) {
             CategoryData data = categoryDataList.get(i);
-            items[i] =  data.getTitle();
+            items[i] = data.getTitle();
             i++;
         }
-        adapterItems = new ArrayAdapter<String>(Task_View.this,R.layout.category_list_item,items);
+        adapterItems = new ArrayAdapter<String>(Task_View.this, R.layout.category_list_item, items);
         autoCompleteTextView.setAdapter(adapterItems);
 
         autoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -313,16 +166,17 @@ public class Task_View extends AppCompatActivity {
         });
 
     }
+
     private void initSwitchListener() {
 
         dateSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean Checked) {
-                if (Checked){
+                if (Checked) {
                     hasDate = true;
                     sCard.setVisibility(View.VISIBLE);
                     eCard.setVisibility(View.VISIBLE);
-                }else{
+                } else {
                     hasDate = false;
                     sCard.setVisibility(View.INVISIBLE);
                     eCard.setVisibility(View.INVISIBLE);
@@ -330,18 +184,20 @@ public class Task_View extends AppCompatActivity {
             }
         });
     }
-    public void openDatePicker1(View view){
 
-        if (view.equals(btDateStart)){ // this will excute if the user clicks starts date picker
+    public void openDatePicker1(View view) {
+
+        if (view.equals(btDateStart)) { // this will excute if the user clicks starts date picker
             Caller = true;
             datePickerDialog.show();
         }
-        if (view.equals(btDateEnd)){// this will excute if the user clicks Ends date picker
+        if (view.equals(btDateEnd)) {// this will excute if the user clicks Ends date picker
             Caller = false;
             datePickerDialog.show();
         }
 
     }
+
     private void initDatePicker() {
 
         DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
@@ -350,31 +206,35 @@ public class Task_View extends AppCompatActivity {
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                 Calendar cal = Calendar.getInstance();
 
-                if (Caller){
-                    btDateStart.setText(makeDateString(day,month+1,year));
+                if (Caller) {
+                    btDateStart.setText(makeDateString(day, month + 1, year));
                     //startD = LocalDate.of(year , month,day);
 
-                    cal.set(Calendar.YEAR , year); // this will help us set default value to Today's Date
-                    cal.set(Calendar.MONTH , month);
-                    cal.set(Calendar.DAY_OF_MONTH , day);
-                    cal.set(Calendar.HOUR_OF_DAY ,0);
-                    cal.set(Calendar.MINUTE , 0);
-                    cal.set(Calendar.SECOND , 0);
+                    cal.set(Calendar.YEAR, year); // this will help us set default value to Today's Date
+                    cal.set(Calendar.MONTH, month);
+                    cal.set(Calendar.DAY_OF_MONTH, day);
+                    cal.set(Calendar.HOUR_OF_DAY, 0);
+                    cal.set(Calendar.MINUTE, 0);
+                    cal.set(Calendar.SECOND, 0);
                     newUpdatedstartD = cal.getTimeInMillis();
 
-                    sDay = day; sMonth = month; sYear = year;
-                }else {
-                    btDateEnd.setText(makeDateString(day,month+1,year));
+                    sDay = day;
+                    sMonth = month;
+                    sYear = year;
+                } else {
+                    btDateEnd.setText(makeDateString(day, month + 1, year));
                     // endD = LocalDate.of(year , month ,day);
 
-                    cal.set(Calendar.YEAR , year); // this will help us set default value to Today's Date
-                    cal.set(Calendar.MONTH , month);
-                    cal.set(Calendar.DAY_OF_MONTH , day);
-                    cal.set(Calendar.HOUR_OF_DAY ,23);
-                    cal.set(Calendar.MINUTE , 59);
-                    cal.set(Calendar.SECOND , 59);
+                    cal.set(Calendar.YEAR, year); // this will help us set default value to Today's Date
+                    cal.set(Calendar.MONTH, month);
+                    cal.set(Calendar.DAY_OF_MONTH, day);
+                    cal.set(Calendar.HOUR_OF_DAY, 23);
+                    cal.set(Calendar.MINUTE, 59);
+                    cal.set(Calendar.SECOND, 59);
                     newUpdatedEndD = cal.getTimeInMillis();
-                    eDay = day; eMonth = month; eYear = year;
+                    eDay = day;
+                    eMonth = month;
+                    eYear = year;
                 }
             }
         };
@@ -384,11 +244,13 @@ public class Task_View extends AppCompatActivity {
         int day = cal.get(Calendar.DAY_OF_MONTH);
 
         int style = AlertDialog.THEME_HOLO_LIGHT;
-        datePickerDialog = new DatePickerDialog(Task_View.this,style,dateSetListener ,year ,month ,day ); // initializing the dialog
+        datePickerDialog = new DatePickerDialog(Task_View.this, style, dateSetListener, year, month, day); // initializing the dialog
     }
+
     private String makeDateString(int day, int month, int year) {
         return getMonthFormat(month) + " " + day + " " + year;
     }
+
     private String getMonthFormat(int month) { // this method is to get the "String" value instead of Digital
         if (month == 1) return "JAN";
         if (month == 2) return "FEB";
@@ -405,36 +267,135 @@ public class Task_View extends AppCompatActivity {
         //Default should never be reached
         return "JAN";
     }
-    public void popTimePicker1(View view){
-        if (sDay == -1){
-            Toast toast = Toast.makeText(Task_View.this ,"Please Enter a Date first",Toast.LENGTH_SHORT);
+
+    public void popTimePicker1(View view) {
+        if (sDay == -1) {
+            Toast toast = Toast.makeText(Task_View.this, "Please Enter a Date first", Toast.LENGTH_SHORT);
             toast.show();
-        }else{
+        } else {
             TimePickerDialog.OnTimeSetListener onTimeSetListener = new TimePickerDialog.OnTimeSetListener() {
                 @Override
                 public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                    hour = selectedHour;  minute = selectedMinute;
-                    if (view.equals(btTimeStart)){
-                        btTimeStart.setText(String.format(Locale.getDefault(), "%02d:%02d",hour ,minute));
+                    hour = selectedHour;
+                    minute = selectedMinute;
+                    if (view.equals(btTimeStart)) {
+                        btTimeStart.setText(String.format(Locale.getDefault(), "%02d:%02d", hour, minute));
 
-                        Calendar cal =Calendar.getInstance();
-                        cal.set(Calendar.YEAR ,sYear); cal.set(Calendar.MONTH ,sMonth); cal.set(Calendar.DAY_OF_MONTH ,sDay); cal.set(Calendar.HOUR_OF_DAY ,selectedHour); cal.set(Calendar.MINUTE ,selectedMinute);
+                        Calendar cal = Calendar.getInstance();
+                        cal.set(Calendar.YEAR, sYear);
+                        cal.set(Calendar.MONTH, sMonth);
+                        cal.set(Calendar.DAY_OF_MONTH, sDay);
+                        cal.set(Calendar.HOUR_OF_DAY, selectedHour);
+                        cal.set(Calendar.MINUTE, selectedMinute);
                         newUpdatedStartTime = cal.getTimeInMillis();
 
                     }
-                    if (view.equals(btTimeEnd)){
-                        btTimeEnd.setText(String.format(Locale.getDefault(), "%02d:%02d",hour ,minute));
+                    if (view.equals(btTimeEnd)) {
+                        btTimeEnd.setText(String.format(Locale.getDefault(), "%02d:%02d", hour, minute));
 
-                        Calendar cal =Calendar.getInstance();
-                        cal.set(Calendar.YEAR ,eYear); cal.set(Calendar.MONTH ,eMonth); cal.set(Calendar.DAY_OF_MONTH ,eDay); cal.set(Calendar.HOUR_OF_DAY ,selectedHour); cal.set(Calendar.MINUTE ,selectedMinute);
+                        Calendar cal = Calendar.getInstance();
+                        cal.set(Calendar.YEAR, eYear);
+                        cal.set(Calendar.MONTH, eMonth);
+                        cal.set(Calendar.DAY_OF_MONTH, eDay);
+                        cal.set(Calendar.HOUR_OF_DAY, selectedHour);
+                        cal.set(Calendar.MINUTE, selectedMinute);
                         newUpdatedEndTime = cal.getTimeInMillis();
                     }
                 }
             };
             int style = AlertDialog.THEME_HOLO_LIGHT; // to change the style of the dialog plug in this style as 2nd parameter in the following method
 
-            TimePickerDialog timePickerDialog = new TimePickerDialog(Task_View.this , onTimeSetListener , hour ,minute , true);
+            TimePickerDialog timePickerDialog = new TimePickerDialog(Task_View.this, onTimeSetListener, hour, minute, true);
             timePickerDialog.setTitle("Select Time");
-            timePickerDialog.show();}
+            timePickerDialog.show();
+        }
     }
+
+    private void dialogShow() {
+        Dialog dialog = new Dialog(Task_View.this);
+        dialog.setContentView(R.layout.activity_update_task);
+        autoCompleteTextView = dialog.findViewById(R.id.auto_complete_text_Update);
+        initDropDownList();
+        int width = WindowManager.LayoutParams.MATCH_PARENT;
+        int height = WindowManager.LayoutParams.WRAP_CONTENT;
+        dialog.getWindow().setLayout(width, height);
+        EditText titleUpd = dialog.findViewById(R.id.titleUpdate);
+        EditText descUp = dialog.findViewById(R.id.descUpdate);
+        Button save = dialog.findViewById(R.id.updateBTN);
+        dateSwitch = dialog.findViewById(R.id.DateSwitchUpdate);
+        initSwitchListener();
+        sCard = dialog.findViewById(R.id.StartCardUpdate);
+        eCard = dialog.findViewById(R.id.EndCardUpdate);
+        sCard.setVisibility(View.INVISIBLE);
+        eCard.setVisibility(View.INVISIBLE);
+        initDatePicker();
+        btDateStart = dialog.findViewById(R.id.StartDateUpdate);
+        btDateEnd = dialog.findViewById(R.id.EndDateUpdate);
+        btTimeStart = dialog.findViewById(R.id.StartTimeUpdate);
+        btTimeEnd = dialog.findViewById(R.id.EndTimeUpdate);
+        ImageView deleteBTN = dialog.findViewById(R.id.taskDeleteBTN);
+        deleteBTN.setVisibility(View.INVISIBLE);
+        dialog.show();
+        btDateStart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openDatePicker1(btDateStart);
+            }
+        });
+        btDateEnd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openDatePicker1(btDateEnd);
+            }
+        });
+        btTimeStart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                popTimePicker1(btTimeStart);
+            }
+        });
+        btTimeEnd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                popTimePicker1(btTimeEnd);
+            }
+        });
+        save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                User d = new User();
+                String uText = titleUpd.getText().toString();
+                String uDesc = descUp.getText().toString();
+                String uCategory = Category;
+                d.taskName = uText;
+                d.description = uDesc;
+                d.cat = uCategory;
+                d.setHasDate(hasDate);
+                if (hasDate ) {
+                    d.setStartDate(newUpdatedstartD);
+                    d.setEndDate(newUpdatedEndD);
+                    d.setStartTime(newUpdatedStartTime);
+                    d.setEndTime(newUpdatedEndTime);
+                    d.setTaskDay(-1);
+                } else {
+                    d.setEndDate(-1);
+                    d.setStartTime(-1);
+                    java.sql.Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+                    d.setTaskDay(timestamp.getTime());
+                    d.setStartTime(newUpdatedStartTime);
+                    d.setEndTime(newUpdatedEndTime);
+                }
+
+                db.userDao().insertAll(d);
+                java.sql.Timestamp timestamp = new java.sql.Timestamp(System.currentTimeMillis());
+                d.setCreateTime(timestamp.getTime());
+
+                userListAdapter.notifyDataSetChanged();
+                dialog.dismiss();
+                userListAdapter.notifyDataSetChanged();
+            }
+        });
+    }
+
+
 }
